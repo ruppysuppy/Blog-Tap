@@ -1,0 +1,23 @@
+.navbar .nav-link-mod,
+.navbar .navbar-nav .nav-item .nav-link-mod {
+    color: #0CFFA5;
+    transition: 0.1s;
+}
+
+.navbar .nav-link-mod:hover,
+.navbar .navbar-nav .nav-item .nav-link-mod:hover {
+    color: rgb(5, 120, 80);
+    transform: scale(1.1);
+}
+
+.nav-item {
+    max-width: fit-content;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+}
