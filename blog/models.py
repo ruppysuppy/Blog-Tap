@@ -65,11 +65,13 @@ class BlogPost(db.Model):
     title = db.Column(db.String(150), nullable=False)
     text = db.Column(db.Text, nullable=False)
     views = db.Column(db.Integer, nullable=False)
+    category = db.Column(db.String(64), nullable=False)
 
-    def __init__(self, user_id, title, text):
+    def __init__(self, user_id, title, text, category):
         self.user_id = user_id
         self.title = title
         self.text = text
+        self.category = category
         self.views = 0
     
     def __repr__(self):
