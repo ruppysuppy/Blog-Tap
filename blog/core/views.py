@@ -22,6 +22,6 @@ def index():
 # ABOUT SETUP ######################################
 ####################################################
 
-@core.route('/about-us')
-def about_us():
-    return render_template('about-us.html')
+@core.route('/about')
+def about():
+    return render_template('about.html')
