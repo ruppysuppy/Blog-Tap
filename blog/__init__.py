@@ -2,6 +2,7 @@
 # IMPORTS (FROM LIBRARY) ###########################
 ####################################################
 
+from datetime import timedelta
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -27,6 +28,12 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 ####################################################
+# COOKIE SETUP #####################################
+####################################################
+
+app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=28)
+
+####################################################
 # MIGRATION SETUP ##################################
 ####################################################
 
@@ -46,6 +53,8 @@ login_manager.login_view = 'users.login'
 
 from blog.core.views import core
 from blog.error_pages.handlers import error_pages
+from blog.post.views import blog_posts
 
 app.register_blueprint(core)
 app.register_blueprint(error_pages)
+app.register_blueprint(blog_posts)
