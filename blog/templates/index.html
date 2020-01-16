@@ -1,5 +1,45 @@
 {% extends 'base.html' %} {% block title %} Home {% endblock title %} {% block content %}
 
-<h1></h1>
+<h1 align='center'>WELCOME TO BLOG TAP!</h1>
+
+<div class="container">
+    {% if blog_posts.items %} {% for post in blog_posts.items %}
+    <div class="card">
+        <div class="card-body">
+            <h2>
+                <a class="card-title" href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}">
+                    {{post.title}}
+                </a>
+            </h2>
+            <a href="{{url_for('user.user_posts', username=post.author.username)}}">
+                Written By: {{post.author.username}}
+            </a>
+            <p>Published On: {{post.date.strftime("%d/%m/%Y")}}</p>
+            <p>Category: {{post.category}}</p>
+            <a href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}" class="btn btn-primary">Read Post</a>
+        </div>
+    </div>
+    {% endfor %} {% else %}
+    <br>
+    <h2>NO BLOGS HAVE BEEN POSTED YET.</h2>
+    <h3>BE THE FIRST BLOGGER ON BLOG TAP!</h3>
+    {% endif %}
+</div>
+
+<nav aria-label="Page Navigation example">
+    <ul class="pagination justify-content-center">
+
+        {% for page_num in blog_posts.iter_pages(left_edge=1, right_current=1) %} {% if blog_posts.page == page_num %}
+        <li class="page-item disabled">
+            <a class="page-link" href="{{url_for('core.index', page=page_num)}}">{{page_num}}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="{{url_for('core.index', page=page_num)}}">{{page_num}}</a>
+        </li>
+        {% endif %} {% endfor %}
+
+    </ul>
+</nav>
 
 {% endblock content %}

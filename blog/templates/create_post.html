@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block title %} Create Post {% endblock title %} {% block content %}
+
+<div class="container">
+    <form class="form-group" method="POST">
+        {{form.hidden_tag()}}
+        <div class="form-group">
+            {{form.title.label(class='form-control-label')}}
+            <br> {{form.title(class='form-control form-control-lg')}}
+        </div>
+        <div class="form-group">
+            {{form.category.label(class='form-control-label')}}
+            <br> {{form.category(class='form-control form-control-lg')}}
+        </div>
+        <div class="form-group">
+            {{form.text.label(class='form-control-label')}}
+            <br> {{form.text(class='form-control form-control-lg')}}
+        </div>
+        <div class="form-group">
+            {{form.submit(class='btn btn-outline-info')}}
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

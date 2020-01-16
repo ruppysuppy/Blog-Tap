@@ -49,11 +49,5 @@ class Register(FlaskForm):
 ####################################################
 
 class UpdateUserForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
     username = StringField('Username', validators=[DataRequired()])
-    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update')
-
-    def check_email(self, field):
-        if User.query.filter_by(email=field.data).first():
-            raise ValidationError('The email entered has already been registered')

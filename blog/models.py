@@ -29,7 +29,7 @@ class User(db.Model, UserMixin):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
-    profile_image = db.Column(db.String(64), nullable=False, default="profile_img_" + str(randint(1, 9)) + ".png")
+    profile_image = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), unique=True, index=True)
     username = db.Column(db.String(64), index=True)
     password_hash = db.Column(db.String(64))
@@ -43,6 +43,7 @@ class User(db.Model, UserMixin):
         self.email = email
         self.password_hash = generate_password_hash(password)
         self.confirmed = 0
+        self.profile_image = "profile_img_" + str(randint(1, 9)) + ".png"
     
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)

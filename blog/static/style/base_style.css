@@ -1,3 +1,7 @@
+* {
+    font-family: 'Lato';
+}
+
 .navbar .nav-link-mod,
 .navbar .navbar-nav .nav-item .nav-link-mod {
     color: #0CFFA6;
@@ -16,8 +20,20 @@
 
 .navbar-toggler {
     border: none;
+    transition: 0.25s;
 }
 
 .navbar-toggler:focus {
     outline: none;
+}
+
+.navbar-toggler:hover {
+    transform: scaleY(0.8);
+}
+
+.card {
+    margin: 8px;
+    /* background-color: #0CFFA6; */
+    border: 2px solid #151D33;
+    border-radius: 8px;
 }

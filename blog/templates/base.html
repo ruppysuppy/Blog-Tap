@@ -7,12 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %} {% endblock title %}</title>
     <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.ico')}}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{url_for('static', filename='style/base_style.css')}}">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: fixed; top: 0; left: 0; width: 100vw; background-color: #151D33 !important;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: fixed; top: 0; left: 0; width: 100vw; background-color: #151D33;">
         <div class="container">
             <a class="navbar-brand nav-link-mod" href="{{url_for('core.index')}}">
                 <h4>Blog Tap</h4>
@@ -27,20 +28,20 @@
                     </li>
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link nav-link-mod" href="#">Account</a>
+                        <a class="nav-link nav-link-mod" href="{{url_for('user.account')}}">Account</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-mod" href="#">Create Post</a>
+                        <a class="nav-link nav-link-mod" href="{{url_for('blog_posts.create_post')}}">Create Post</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-mod" href="#">Log Out</a>
+                        <a class="nav-link nav-link-mod" href="{{url_for('user.logout')}}">Log Out</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link nav-link-mod" href="#">Log In</a>
+                        <a class="nav-link nav-link-mod" href="{{url_for('user.login')}}">Log In</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-mod" href="#">Register</a>
+                        <a class="nav-link nav-link-mod" href="{{url_for('user.register')}}">Register</a>
                     </li>
                     {% endif %}
                 </ul>
