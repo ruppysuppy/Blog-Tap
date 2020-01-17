@@ -3,7 +3,7 @@
 ####################################################
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import StringField, SubmitField, TextAreaField, SelectField
 from wtforms.validators import DataRequired
 
 ####################################################
@@ -12,6 +12,26 @@ from wtforms.validators import DataRequired
 
 class BlogPostForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
-    category = StringField("Category", validators=[DataRequired()])
+    category = event_selector = SelectField("Category", choices=[
+        ('DIY', 'DIY'), 
+        ('Education', 'Education'), 
+        ('Finances', 'Finances'), 
+        ('Fitness', 'Fitness'), 
+        ('Food', 'Food'), 
+        ('Gaming', 'Gaming'), 
+        ('Health', 'Health'), 
+        ('Lifestyle', 'Lifestyle'), 
+        ('Movie', 'Movie'), 
+        ('Music', 'Music'), 
+        ('News', 'News'), 
+        ('Parenting', 'Parenting'), 
+        ('Personal', 'Personal'), 
+        ('Politics', 'Politics'), 
+        ('Religious', 'Religious'), 
+        ('Self-Development', 'Self-Development'), 
+        ('Sports', 'Sports'), 
+        ('Technology', 'Technology'), 
+        ('Travel', 'Travel')
+    ])
     text = TextAreaField("Text", validators=[DataRequired()])
     submit = SubmitField("Post")

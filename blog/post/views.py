@@ -2,7 +2,7 @@
 # IMPORTS (FROM LIBRARY) ###########################
 ####################################################
 
-from flask import render_template, url_for, request, redirect, Blueprint, flash
+from flask import render_template, url_for, request, redirect, Blueprint, flash, abort
 from flask_login import current_user, login_required
 
 ####################################################
@@ -10,7 +10,7 @@ from flask_login import current_user, login_required
 ####################################################
 
 from blog import db
-from blog.models import BlogPost
+from blog.models import BlogPost, User
 from blog.post.forms import BlogPostForm
 
 ####################################################
@@ -28,8 +28,9 @@ blog_posts = Blueprint('blog_posts', __name__)
 def create_post():
     form = BlogPostForm()
 
-    if form.validate_on_submit():
-        post = BlogPost(title=form.title.data, category=form.category.data, text= form.text.data, user_id=current_user.id)
+    if (form.validate_on_submit() or request.method == "POST"):
+        print('form.title.data, form.category.data, form.text.data, current_user.id')
+        post = BlogPost(title=form.title.data, category=form.category.data, text=form.text.data, user_id=current_user.id)
 
         db.session.add(post)
         db.session.commit()
@@ -37,7 +38,7 @@ def create_post():
         flash('Post Created!')
 
         return redirect(url_for('core.index'))
-
+    
     return render_template('create_post.html', form=form, page_name='Create a Blog')
 
 ####################################################
@@ -47,7 +48,19 @@ def create_post():
 @blog_posts.route('/<int:blog_post_id>')
 def blog_post(blog_post_id):
     post = BlogPost.query.get_or_404(blog_post_id)
-    return render_template('blog_posts.html', title=post.title, date=post.date, post=post, category=post.category)
+
+    try:
+        if (current_user.email != post.author.email):
+            post.views += 1
+            user = User.query.get_or_404(current_user.id)
+            user.last_viewed_catagory = post.category
+            db.session.commit()
+    
+    except:
+        pass
+
+    finally:
+        return render_template('blog_posts.html', title=post.title, date=post.date, post=post, category=post.category)
 
 ####################################################
 # UPDATE POST SETUP ################################

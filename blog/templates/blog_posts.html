@@ -5,6 +5,7 @@
     <h2>Written By: {{post.author.username}}</h2>
     <h4>Published: {{post.date.strftime("%d %B %Y")}}</h4>
     <h4>Category: {{post.category}}</h4>
+    <h5>Views: {{post.views}}</h5> [{{current_user.last_viewed_catagory}}]
     <br>
     <p>{{post.text}}</p>
 
