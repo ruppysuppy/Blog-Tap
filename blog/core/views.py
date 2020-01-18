@@ -3,6 +3,7 @@
 ####################################################
 
 from flask import render_template, request, Blueprint
+from flask_login import current_user
 
 ####################################################
 # IMPORTS (LOCAL) ##################################
@@ -26,13 +27,10 @@ def index():
     page = request.args.get('page', 1, type=int)
 
     try:
-        query1 = db.engine.execute(f"select * \
-                                        from BlogPost \
-                                        where category='{current_user.last_viewed_catagory}'")
-        query2 = db.engine.execute(f"select * \
-                                        from BlogPost \
-                                        where category!='{current_user.last_viewed_catagory}'")
-        blog_posts = query1.union(query2)
+        query1 = BlogPost.query.order_by(BlogPost.views.desc()).filter(BlogPost.category!=current_user.last_viewed_catagory)
+        query2 = BlogPost.query.order_by(BlogPost.views.desc()).filter_by(category=current_user.last_viewed_catagory)
+        blog_posts = BlogPost.query.order_by(BlogPost.views.desc())
+        blog_posts.filter(BlogPost.category==current_user.last_viewed_catagory).filter(BlogPost.category!=current_user.last_viewed_catagory)
     except:
         blog_posts = BlogPost.query.order_by(BlogPost.views.desc())
     
