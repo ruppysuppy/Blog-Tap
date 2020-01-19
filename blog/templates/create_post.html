@@ -5,18 +5,18 @@
         {{form.hidden_tag()}}
         <div class="form-group">
             {{form.title.label(class='form-control-label')}}
-            <br> {{form.title(class='form-control form-control-lg')}}
+            <br> {{form.title(class='form-control form-control-lg form-input-normal')}}
         </div>
         <div class="form-group">
             {{form.category.label(class='form-control-label')}}
-            <br> {{form.category(class='form-control form-control-lg')}}
+            <br> {{form.category(class='form-control form-control-lg form-input-normal')}}
         </div>
         <div class="form-group">
             {{form.text.label(class='form-control-label')}}
-            <br> {{form.text(class='form-control form-control-lg')}}
+            <br> {{form.text(class='form-control form-control-lg form-input-normal', rows=8)}}
         </div>
         <div class="form-group">
-            {{form.submit(class='btn btn-outline-info')}}
+            {{form.submit}}
         </div>
     </form>
 </div>

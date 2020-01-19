@@ -36,3 +36,105 @@
     border: 2px solid #151D33;
     border-radius: 8px;
 }
+
+input {
+    border: none;
+    border-bottom: 2px solid #151D33;
+    color: #151D33;
+    transition: 0.1s;
+    font-family: 'Lato';
+    font-size: large;
+    font-weight: 800;
+}
+
+.form-control {
+    font-family: 'Lato';
+    font-size: large;
+    font-weight: 800;
+}
+
+.form-control:focus {
+    outline: none;
+}
+
+input:focus {
+    transform: scale(1.025);
+    outline: none;
+}
+
+.label-text {
+    font-family: 'Lato';
+    font-size: large;
+    font-weight: 500;
+}
+
+input[type=submit],
+.btn-normal {
+    padding: 8px 16px;
+    background-color: #0CFFA6;
+    border-radius: 8px;
+    transition: 0.1s;
+}
+
+input[type=submit]:hover,
+.btn-normal:hover {
+    transform: scale(1.1);
+    color: white;
+    background-color: rgb(10, 190, 125);
+}
+
+.form-input-normal {
+    font-weight: 400;
+    font-family: 'Marvel';
+    font-size: large;
+}
+
+.form-input-normal:focus {
+    transform: scale(1);
+    outline: none;
+}
+
+.btn-normal {
+    margin-right: 16px;
+    border: none;
+    color: #151D33;
+}
+
+.btn-danger,
+form .btn-danger,
+.btn-cancel {
+    transition: 0.1s;
+    border-radius: 8px;
+    color: #151D33;
+    background-color: rgb(250, 60, 60);
+}
+
+.btn-danger:hover,
+form .btn-danger:hover,
+.btn-cancel {
+    transform: scale(1.1);
+    background-color: rgb(255, 35, 35);
+}
+
+.modal-footer .btn-cancel {
+    margin: 0 16px;
+    background-color: rgb(150, 150, 150);
+}
+
+.modal-footer .btn-cancel:hover {
+    background-color: rgb(90, 90, 90);
+    transform: scale(1.21);
+    color: white;
+}
+
+@media(max-width: 600px) {
+    .reactive-text-1 {
+        font-size: x-large;
+    }
+    .reactive-text-3 {
+        font-size: large;
+    }
+    .reactive-text-5 {
+        font-size: medium;
+    }
+}

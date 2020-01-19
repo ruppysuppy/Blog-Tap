@@ -13,7 +13,6 @@ from wtforms.validators import DataRequired
 class BlogPostForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
     category = event_selector = SelectField("Category", choices=[
-        ('DIY', 'DIY'), 
         ('Education', 'Education'), 
         ('Finances', 'Finances'), 
         ('Fitness', 'Fitness'), 
