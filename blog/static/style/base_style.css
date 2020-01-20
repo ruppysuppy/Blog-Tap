@@ -1,5 +1,6 @@
 * {
     font-family: 'Lato';
+    color: white;
 }
 
 .navbar .nav-link-mod,
@@ -31,6 +32,12 @@
     transform: scaleY(0.8);
 }
 
+.search-bar input[type=search] {
+    font-family: 'Marvel';
+    padding: 2px 16px;
+    font-size: small;
+}
+
 .card {
     margin: 8px;
     border: 2px solid #151D33;
@@ -45,6 +52,11 @@ input {
     font-family: 'Marvel';
     font-size: large;
     font-weight: 800;
+    background: transparent;
+}
+
+input::placeholder {
+    color: #151D33;
 }
 
 .form-control {
@@ -131,17 +143,44 @@ form .btn-danger:hover,
 .card-img {
     height: 100%;
     width: 100%;
-    min-width: 100px;
+    min-width: 175px;
     min-height: 200px;
-    background-position: center;
-    background-size: cover;
-    transform: scaleX(1.075);
+    transition: 1s;
+    position: relative;
+    left: -16px;
+    overflow: hidden;
 }
 
-@media(min-width: 575px) {
-    .card-img {
-        position: relative;
-        left: -12px;
+.blog-card {
+    width: 45%;
+    min-width: 45%;
+    max-width: 48%;
+    border-radius: 0;
+    border: 2px solid #151D33;
+    margin: 8px;
+    display: flex;
+    background-color: rgb(220, 220, 220);
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    transition: 0.25s;
+}
+
+.blog-card:hover .img {
+    transform: scale(1.1);
+}
+
+@media(max-width: 990px) {
+    .blog-card {
+        margin: auto;
+        width: 85%;
+        min-width: 85%;
+        width: 85%;
+        margin-bottom: 16px;
     }
 }
 

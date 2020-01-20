@@ -2,35 +2,40 @@
 
 <h1 class="reactive-text-1" align='center' style="margin-bottom: 32px;">WELCOME TO BLOG TAP!</h1>
 
-{% if blog_posts.items %} {% for post in blog_posts.items %}
-<div class="container card-deck">
-    <div class="card mb-3 col-md-4" style="max-width: 540px;">
-        <div class="row no-gutters">
-            <div class="col-md-4">
-                <div class="card-img" style="background-image: url({{url_for('static', filename='img/'+post.category+'.jpg')}});"></div>
+<div style="min-height: max-content; padding-bottom: 128px;">
+    {% if blog_posts.items %}
+    <h3 class="reactive-text-3" style="padding-left: 24px;">Top Blogs:</h3>
+    <div class="container card-container" style="display: flex; flex-wrap: wrap;">
+        {% for post in blog_posts.items %}
+        <div class="row blog-card">
+            <div class="col-md-4" style="display: inline-block;">
+                <div class="card-img">
+                    <div class="img" style="background-image: url({{url_for('static', filename='img/blog_background/'+post.category+'.jpg')}});"></div>
+                </div>
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <h5 class="card-title text-break">
                         <a class="card-title" href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}">{{post.title}}</a>
                     </h5>
-                    <p class="card-text">
+                    <p class="card-text" style="margin-bottom: 0; color: black;">
                         Author:
                         <a href="{{url_for('user.user_posts', username=post.author.username)}}">{{post.author.username}}</a>
                     </p>
-                    <p class="card-text text-muted">Published On: {{post.date.strftime("%d/%m/%Y")}}</p class="card-text">
-                    <p class="card-text text-muted">Category: {{post.category}}</p class="card-text">
+                    <p class="card-text text-muted" style="padding-top: 0; margin-top: 0; margin-bottom: 0;">Published On: {{post.date.strftime("%d/%m/%Y")}}</p class="card-text">
+                    <p class="card-text text-muted" style="padding-top: 0; margin-top: 0;">Category: {{post.category}}</p class="card-text">
                     <a href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}" class="btn btn-primary">Read Post</a>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
+    {% else %}
+    <br>
+    <h2>NO BLOGS HAVE BEEN POSTED YET.</h2>
+    <h3>BE THE FIRST BLOGGER ON BLOG TAP!</h3>
+    {% endif %}
 </div>
-{% endfor %} {% else %}
-<br>
-<h2>NO BLOGS HAVE BEEN POSTED YET.</h2>
-<h3>BE THE FIRST BLOGGER ON BLOG TAP!</h3>
-{% endif %}
 
 <nav aria-label="Page Navigation example">
     <ul class="pagination justify-content-center">
