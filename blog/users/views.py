@@ -2,7 +2,7 @@
 # IMPORTS (FROM LIBRARY) ###########################
 ####################################################
 
-from flask import render_template, url_for, flash, redirect, request, Blueprint
+from flask import render_template, url_for, flash, redirect, request, Blueprint, session
 from flask_login import login_user, logout_user, current_user, login_required
 
 ####################################################
@@ -58,6 +58,8 @@ def login():
         
         if (user is not None and user.check_password(form.password.data)):
             login_user(user)
+            session.permanent = True
+
             flash('Login Successful!')
 
             next = request.args.get('next')

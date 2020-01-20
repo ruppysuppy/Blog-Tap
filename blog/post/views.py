@@ -79,6 +79,7 @@ def update(blog_post_id):
         post.category = form.category.data
 
         db.session.commit()
+        flash('Updated Post!')
         return redirect(url_for('blog_posts.blog_post', blog_post_id=post.id))
 
     if (request.method == "GET"):
@@ -102,5 +103,7 @@ def delete(blog_post_id):
     
     db.session.delete(post)
     db.session.commit()
+
+    flash('Post Deleted!')
 
     return redirect(url_for('core.index'))
