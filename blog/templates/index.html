@@ -2,9 +2,9 @@
 
 <h1 class="reactive-text-1" align='center' style="margin-bottom: 32px;">WELCOME TO BLOG TAP!</h1>
 
-<div class="container">
+<div class="container card-deck">
     {% if blog_posts.items %} {% for post in blog_posts.items %}
-    <div class="card">
+    <!-- <div class="card">
         <div class="card-body">
             <h2>
                 <a class="card-title" href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}">
@@ -17,6 +17,29 @@
             <p>Published On: {{post.date.strftime("%d/%m/%Y")}}</p>
             <p>Category: {{post.category}}</p>
             <a href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}" class="btn btn-primary">Read Post</a>
+        </div>
+    </div> -->
+    <div class="card mb-3 col-md-4" style="max-width: 540px;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <!-- <img src="{{url_for('static', filename='img/'+post.category+'.jpg')}}" class="card-img" alt="..."> -->
+                <div class="card-img" style="background-image: url({{url_for('static', filename='img/'+post.category+'.jpg')}});"></div>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a class="card-title" href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}">{{post.title}}</a>
+                    </h5>
+                    <p class="card-text">
+                        Author:
+                        <a href="{{url_for('user.user_posts', username=post.author.username)}}">{{post.author.username}}</a>
+                    </p>
+                    <p class="card-text text-muted">Published On: {{post.date.strftime("%d/%m/%Y")}}</p class="card-text">
+                    <p class="card-text text-muted">Category: {{post.category}}</p class="card-text">
+                    <a href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}" class="btn btn-primary">Read Post</a>
+                    <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                </div>
+            </div>
         </div>
     </div>
     {% endfor %} {% else %}

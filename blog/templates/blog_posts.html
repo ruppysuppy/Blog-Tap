@@ -5,11 +5,8 @@
     <h3>Author: {{post.author.username}}</h3>
     <h4 class="text-muted">Published: {{post.date.strftime("%d %B %Y")}}</h4>
     <h4 class="text-muted">Category: {{post.category}}</h4>
-    <h5>Views: {{post.views}}</h5> [{{current_user.last_viewed_catagory}}]
-    <br>
-    <p>{{post.text}}</p>
-
-    {% if post.author == current_user %}
+    <h5>Views: {{post.views}}</h5>
+    <br> {{post.text|markdown}} {% if post.author == current_user %}
 
     <a href="{{url_for('blog_posts.update', blog_post_id=post.id)}}"> <button class="btn-normal">Update</button></a>
     <button type="button" name="button" class="btn btn-danger" data-toggle="modal" data-target="#del_modal">Delete</button> {% endif %}

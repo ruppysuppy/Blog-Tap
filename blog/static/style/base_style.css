@@ -42,7 +42,7 @@ input {
     border-bottom: 2px solid #151D33;
     color: #151D33;
     transition: 0.1s;
-    font-family: 'Lato';
+    font-family: 'Marvel';
     font-size: large;
     font-weight: 800;
 }
@@ -74,6 +74,7 @@ input[type=submit],
     background-color: #0CFFA6;
     border-radius: 8px;
     transition: 0.1s;
+    font-family: 'Lato';
 }
 
 input[type=submit]:hover,
@@ -125,6 +126,23 @@ form .btn-danger:hover,
     background-color: rgb(90, 90, 90);
     transform: scale(1.21);
     color: white;
+}
+
+.card-img {
+    height: 100%;
+    width: 100%;
+    min-width: 100px;
+    min-height: 200px;
+    background-position: center;
+    background-size: cover;
+    transform: scaleX(1.075);
+}
+
+@media(min-width: 575px) {
+    .card-img {
+        position: relative;
+        left: -12px;
+    }
 }
 
 @media(max-width: 600px) {

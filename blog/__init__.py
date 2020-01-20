@@ -6,6 +6,7 @@ from datetime import timedelta
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_misaka import Misaka
 from flask_login import LoginManager
 import os
 
@@ -46,6 +47,12 @@ Migrate(app, db)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'users.login'
+
+####################################################
+# MISAKA SETUP (MARKDOWN CONVERTER) ################
+####################################################
+
+Misaka(app)
 
 ####################################################
 # BLUEPRINT SETUP ##################################

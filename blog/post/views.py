@@ -48,10 +48,13 @@ def create_post():
 def blog_post(blog_post_id):
     post = BlogPost.query.get_or_404(blog_post_id)
 
-    if (current_user.is_authenticated and current_user.email != post.author.email):
+    if ((current_user.is_authenticated and current_user.email != post.author.email) or (not current_user.is_authenticated)):
         post.views += 1
-        user = User.query.get_or_404(current_user.id)
-        user.last_viewed_catagory = post.category
+
+        if (current_user.is_authenticated):
+            user = User.query.get_or_404(current_user.id)
+            user.last_viewed_catagory = post.category
+        
         db.session.commit()
     
     return render_template('blog_posts.html', title=post.title, date=post.date, post=post, category=post.category)
@@ -70,7 +73,7 @@ def update(blog_post_id):
     
     form = BlogPostForm()
     
-    if form.validate_on_submit():
+    if (form.validate_on_submit() or request.method == "POST"):
         post.title = form.title.data
         post.text= form.text.data
         post.category = form.category.data
