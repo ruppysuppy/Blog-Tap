@@ -14,7 +14,7 @@
 </head>
 
 <body style="width: 100vw; overflow-x: hidden;">
-    <div class="background" style="height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; z-index: -10; background-image: url({{url_for('static', filename='img/background4.jpg')}});"></div>
+    <div class="background" style="height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; z-index: -10; background-image: url({{url_for('static', filename='img/background2.png')}});"></div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: fixed; top: 0; left: 0; width: 100vw; background-color: #151D33 !important; z-index: 9999;">
         <div class="container">
             <a class="navbar-brand nav-link-mod" href="{{url_for('core.index')}}">
@@ -48,10 +48,6 @@
                     {% endif %}
                 </ul>
             </div>
-            <form class="form-inline my-2 my-lg-0 collapse navbar-collapse search-bar" style="position: relative; right: -120px;">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="min-width: 250px">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="font-size: small;">Search</button>
-            </form>
         </div>
     </nav>
 

@@ -8,25 +8,23 @@
     <div class="container card-container" style="display: flex; flex-wrap: wrap;">
         {% for post in blog_posts.items %}
         <div class="row blog-card">
-            <div class="col-md-4" style="display: inline-block;">
-                <div class="card-img">
-                    <div class="img" style="background-image: url({{url_for('static', filename='img/blog_background/'+post.category+'.jpg')}});"></div>
-                </div>
+            <div class="card-img">
+                <div class="img" style="background-image: url({{url_for('static', filename='img/blog_background/'+post.category+'.jpg')}});"></div>
             </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title text-break">
-                        <a class="card-title" href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}">{{post.title}}</a>
-                    </h5>
-                    <p class="card-text" style="margin-bottom: 0; color: black;">
-                        Author:
-                        <a href="{{url_for('user.user_posts', username=post.author.username)}}">{{post.author.username}}</a>
-                    </p>
-                    <p class="card-text text-muted" style="padding-top: 0; margin-top: 0; margin-bottom: 0;">Published On: {{post.date.strftime("%d/%m/%Y")}}</p class="card-text">
-                    <p class="card-text text-muted" style="padding-top: 0; margin-top: 0;">Category: {{post.category}}</p class="card-text">
-                    <a href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}" class="btn btn-primary">Read Post</a>
+            <a href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}" style="font-weight: 700;">
+                <div>
+                    <div class="card-body">
+                        <h5 class="card-title text-break">
+                            {{post.title}}
+                        </h5>
+                        <p class="card-text" style="margin-bottom: 0;">
+                            Author: {{post.author.username}}
+                        </p>
+                        <p class="card-text" style="padding-top: 0; margin-top: 0; margin-bottom: 0;">Published On: {{post.date.strftime("%d/%m/%Y")}}</p class="card-text">
+                        <p class="card-text" style="padding-top: 0; margin-top: 0;">Category: {{post.category}}</p class="card-text">
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
         {% endfor %}
     </div>
@@ -41,8 +39,8 @@
     <ul class="pagination justify-content-center">
 
         {% for page_num in blog_posts.iter_pages(left_edge=1, right_current=1) %} {% if blog_posts.page == page_num %}
-        <li class="page-item disabled">
-            <a class="page-link" href="{{url_for('core.index', page=page_num)}}">{{page_num}}</a>
+        <li class="page-item active">
+            <a class="page-link active" href="{{url_for('core.index', page=page_num)}}">{{page_num}}</a>
         </li>
         {% else %}
         <li class="page-item">

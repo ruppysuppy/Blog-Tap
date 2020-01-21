@@ -1,6 +1,5 @@
 * {
     font-family: 'Lato';
-    color: white;
 }
 
 .navbar .nav-link-mod,
@@ -30,12 +29,6 @@
 
 .navbar-toggler:hover {
     transform: scaleY(0.8);
-}
-
-.search-bar input[type=search] {
-    font-family: 'Marvel';
-    padding: 2px 16px;
-    font-size: small;
 }
 
 .card {
@@ -141,14 +134,11 @@ form .btn-danger:hover,
 }
 
 .card-img {
-    height: 100%;
-    width: 100%;
-    min-width: 175px;
+    max-height: 100%;
     min-height: 200px;
     transition: 1s;
-    position: relative;
-    left: -16px;
     overflow: hidden;
+    z-index: 100;
 }
 
 .blog-card {
@@ -160,18 +150,36 @@ form .btn-danger:hover,
     margin: 8px;
     display: flex;
     background-color: rgb(220, 220, 220);
+    transition: 0.25s;
+    background-position: center;
+    background-size: cover;
 }
 
 .img {
     width: 100%;
     height: 100%;
+    border-radius: 0;
     background-position: center;
     background-size: cover;
     transition: 0.25s;
 }
 
+.blog-card:hover {
+    transform: scale(1.01);
+}
+
 .blog-card:hover .img {
     transform: scale(1.1);
+}
+
+.card-container .blog-card a:hover {
+    text-decoration: none;
+    transform: scale(0.99);
+}
+
+.active {
+    background-color: #0CFFA6 !important;
+    border-color: #0CFFA6 !important;
 }
 
 @media(max-width: 990px) {

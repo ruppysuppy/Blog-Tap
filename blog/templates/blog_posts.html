@@ -2,7 +2,7 @@
 
 <div class="container">
     <h1>Title: {{post.title}}</h1>
-    <h3>Author: {{post.author.username}}</h3>
+    <h3>Author: <a href="{{url_for('user.user_posts', username=post.author.username)}}">{{post.author.username}}</a></h3>
     <h4 class="text-muted">Published: {{post.date.strftime("%d %B %Y")}}</h4>
     <h4 class="text-muted">Category: {{post.category}}</h4>
     <h5>Views: {{post.views}}</h5>
