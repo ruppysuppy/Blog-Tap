@@ -2,25 +2,49 @@
 
 <div class="container">
     <div align="center">
-        <h1>Blogs By: {{user.username}}</h1>
-        <img src="{{url_for('static', filename='img/profile_image/'+user.profile_image)}}" alt="Error! Picture not found." style="border-radius: 50%; height: 150px; width: 150px;">
+        <h1 class="reactive-text-1 text-break">Blogs By: {{user.username}}</h1>
+        <img src="{{url_for('static', filename='img/profile_image/'+user.profile_image)}}" alt="Error! Picture not found." style="border-radius: 50%; height: 150px; width: 150px; margin-bottom: 32px;">
     </div>
 </div>
 
-{% if blog_posts.items %} {% for post in blog_posts.items %}
-<h2><a href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}">{{post.title}}</a></h2>
-<p>Written By: <a href="{{url_for('user.user_posts', username=post.author.username)}}">{{post.author.username}}</a></p>
-<p class="text-muted">Published on: {{post.date.strftime('%d/%m/%Y')}}</p>
-<p class="text-muted">Category: {{post.category}}</p>
-<p>{{post.text}}</p>
-<br> {% endfor %}
+<div style="min-height: max-content; padding-bottom: 32px;">
+    {% if blog_posts.items %}
+    <div class="container card-container" style="display: flex; flex-wrap: wrap;">
+        {% for post in blog_posts.items %}
+        <a href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}" class="blog-card" style="font-weight: 700;">
+            <!-- <div class="row blog-card"> -->
+            <div class="card-img">
+                <div class="img" style="background-image: url({{url_for('static', filename='img/blog_background/'+post.category+'.jpg')}});"></div>
+            </div>
+            <div class="col-md-12" style="max-height: max-content;">
+                <div class="card-body">
+                    <h5 class="card-title text-break">
+                        {{post.title}}
+                    </h5>
+                    <p class="card-text" style="margin-bottom: 0;">
+                        Author: {{post.author.username}}
+                    </p>
+                    <p class="card-text" style="padding-top: 0; margin-top: 0; margin-bottom: 0;">Published On: {{post.date.strftime("%d/%m/%Y")}}</p class="card-text">
+                    <p class="card-text" style="padding-top: 0; margin-top: 0;">Category: {{post.category}}</p class="card-text">
+                </div>
+            </div>
+            <!-- </div> -->
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <br>
+    <h3>Holy Crap!</h3>
+    <h4>It seems like {{user.username}} has not posted any blogs...</h4>
+    {% endif %}
+</div>
 
 <nav aria-label="Page Navigation example">
     <ul class="pagination justify-content-center">
 
         {% for page_num in blog_posts.iter_pages(left_edge=1, right_current=1) %} {% if blog_posts.page == page_num %}
-        <li class="page-item disabled">
-            <a class="page-link" href="{{url_for('user.user_posts', username=user.username, page=page_num)}}">{{page_num}}</a>
+        <li class="page-item active">
+            <a class="page-link active" href="{{url_for('user.user_posts', username=user.username, page=page_num)}}">{{page_num}}</a>
         </li>
         {% else %}
         <li class="page-item">
@@ -31,9 +55,4 @@
     </ul>
 </nav>
 
-{% else %}
-
-<h3>Holy Crap!</h3>
-<h4>It seems like {{user.username}} has not posted any blogs...</h4>
-
-{% endif %} {% endblock content %}
+{% endblock content %}

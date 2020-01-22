@@ -134,16 +134,18 @@ form .btn-danger:hover,
 }
 
 .card-img {
-    max-height: 100%;
+    min-width: 100%;
+    min-width: 100%;
     min-height: 200px;
     transition: 1s;
+    border-radius: 0;
     overflow: hidden;
     z-index: 100;
 }
 
 .blog-card {
-    width: 45%;
-    min-width: 45%;
+    width: 48%;
+    min-width: 48%;
     max-width: 48%;
     border-radius: 0;
     border: 2px solid #151D33;
@@ -172,9 +174,14 @@ form .btn-danger:hover,
     transform: scale(1.1);
 }
 
-.card-container .blog-card a:hover {
+.card-container a {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-container a:hover {
     text-decoration: none;
-    transform: scale(0.99);
+    transform: scale(1.025);
 }
 
 .active {
@@ -189,6 +196,12 @@ form .btn-danger:hover,
         min-width: 85%;
         width: 85%;
         margin-bottom: 16px;
+    }
+    .img {
+        min-height: 200px;
+    }
+    a {
+        font-size: small;
     }
 }
 
