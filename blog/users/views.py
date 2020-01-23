@@ -41,7 +41,7 @@ def register():
         
         else:
             flash('Email already registered')
-            return redirect(url_for('user.regiser'))
+            return redirect(url_for('user.register'))
     
     return render_template('register.html', form=form, page_name="Registration")
 
@@ -82,6 +82,7 @@ def login():
 @users.route('/logout')
 def logout():
     logout_user()
+    flash('Successfully logged out!')
     return redirect(url_for('core.index'))
 
 ####################################################
@@ -96,7 +97,7 @@ def account():
     if form.validate_on_submit():
         current_user.username = form.username.data
 
-        flash('Username Updated!')
+        flash('Your Details have been Updated!')
 
         db.session.commit()
 

@@ -2,6 +2,16 @@
     font-family: 'Lato';
 }
 
+.home-link {
+    color: #0CFFA6;
+    margin-bottom: 0;
+    transition: 0.1s;
+}
+
+.home-link:hover {
+    color: rgb(5, 120, 80);
+}
+
 .navbar .nav-link-mod,
 .navbar .navbar-nav .nav-item .nav-link-mod {
     color: #0CFFA6;
@@ -177,11 +187,13 @@ form .btn-danger:hover,
 .card-container a {
     display: flex;
     flex-direction: column;
+    color: #151D33;
 }
 
 .card-container a:hover {
     text-decoration: none;
     transform: scale(1.025);
+    color: rgb(5, 120, 80);
 }
 
 .active {

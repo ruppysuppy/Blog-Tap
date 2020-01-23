@@ -28,7 +28,7 @@ def index():
 
     blog_posts = BlogPost.query.order_by(BlogPost.views.desc()).paginate(page=page, per_page=10)
     if (current_user.is_authenticated):
-        recommended = BlogPost.query.filter_by(category=current_user.last_viewed_catagory).order_by(BlogPost.views.desc()).paginate(page=page, per_page=2, error_out=False)
+        recommended = BlogPost.query.filter_by(category=current_user.last_viewed_catagory).filter(BlogPost.author != current_user).order_by(BlogPost.views.desc()).paginate(page=page, per_page=2, error_out=False)
     else:
         recommended = None
     
