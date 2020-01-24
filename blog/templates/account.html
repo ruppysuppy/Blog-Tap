@@ -3,7 +3,9 @@
 <div class="container">
     <div align='center'>
         <h1 class="reactive-text-1">Welcome {{current_user.username}}</h1>
-        <img src="{{url_for('static', filename='img/profile_image/' + current_user.profile_image)}}" align='center' style="border-radius: 50%; height: 150px; width: 150px;">
+        <button class="acc-pic" type="button" data-toggle="modal" data-target="#exampleModalCenter">
+            <img id="profile-img" src="{{url_for('static', filename='img/profile_image/' + current_user.profile_image)}}" align='center' style="border-radius: 50%; height: 150px; width: 150px;">
+        </button>
         <p class="label-text">{{current_user.email}}</p>
     </div>
 </div>
@@ -20,5 +22,64 @@
         </div>
     </form>
 </div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Select Account Picture</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body" style="z-index: 100000;">
+                <form class="grid-container">
+                    <input type="radio" class="grid-item" name="profile-img" id="1">
+                    <label for="1">
+                        <img class="img-sel" src="{{url_for('static', filename='img/profile_image/profile_img_1.png')}}">
+                    </label>
+                    <input type="radio" class="grid-item" name="profile-img" id="2">
+                    <label for="2">
+                        <img class="img-sel" src="{{url_for('static', filename='img/profile_image/profile_img_2.png')}}">
+                    </label>
+                    <input type="radio" class="grid-item" name="profile-img" id="3">
+                    <label for="3">
+                        <img class="img-sel" src="{{url_for('static', filename='img/profile_image/profile_img_3.png')}}">
+                    </label>
+                    <input type="radio" class="grid-item" name="profile-img" id="4">
+                    <label for="4">
+                        <img class="img-sel" src="{{url_for('static', filename='img/profile_image/profile_img_4.png')}}">
+                    </label>
+                    <input type="radio" class="grid-item" name="profile-img" id="5">
+                    <label for="5">
+                        <img class="img-sel" src="{{url_for('static', filename='img/profile_image/profile_img_5.png')}}">
+                    </label>
+                    <input type="radio" class="grid-item" name="profile-img" id="6">
+                    <label for="6">
+                        <img class="img-sel" src="{{url_for('static', filename='img/profile_image/profile_img_6.png')}}">
+                    </label>
+                    <input type="radio" class="grid-item" name="profile-img" id="7">
+                    <label for="7">
+                        <img class="img-sel" src="{{url_for('static', filename='img/profile_image/profile_img_7.png')}}">
+                    </label>
+                    <input type="radio" class="grid-item" name="profile-img" id="8">
+                    <label for="8">
+                        <img class="img-sel" src="{{url_for('static', filename='img/profile_image/profile_img_8.png')}}">
+                    </label>
+                    <input type="radio" class="grid-item" name="profile-img" id="9">
+                    <label for="9">
+                        <img class="img-sel" src="{{url_for('static', filename='img/profile_image/profile_img_9.png')}}">
+                    </label>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{url_for('static', filename='script/script_profile_img.js')}}"></script>
 
 {% endblock content %}
