@@ -157,7 +157,7 @@ form .btn-danger:hover,
     width: 48%;
     min-width: 48%;
     max-width: 48%;
-    border-radius: 0;
+    border-radius: 16px;
     border: 2px solid #151D33;
     margin: 8px;
     display: flex;
@@ -165,6 +165,8 @@ form .btn-danger:hover,
     transition: 0.25s;
     background-position: center;
     background-size: cover;
+    box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 1);
+    overflow: hidden;
 }
 
 .img {
@@ -178,6 +180,7 @@ form .btn-danger:hover,
 
 .blog-card:hover {
     transform: scale(1.01);
+    box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 1);
 }
 
 .blog-card:hover .img {
