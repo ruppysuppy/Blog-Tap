@@ -97,13 +97,20 @@ def account():
     if form.validate_on_submit():
         current_user.username = form.username.data
 
-        flash('Your Details have been Updated!')
+        flash('The Changes have been saved!')
 
         db.session.commit()
 
         return redirect(url_for('user.account'))
 
     elif request.method == "GET":
+        form.username.data = current_user.username
+    
+    elif request.method == "POST":
+        pic_num = request.form["profile-img"]
+        current_user.profile_image = current_user.profile_image[:-5] + pic_num + '.png'
+        db.session.commit()
+
         form.username.data = current_user.username
     
     profile_image = url_for('static', filename='img/'+current_user.profile_image)

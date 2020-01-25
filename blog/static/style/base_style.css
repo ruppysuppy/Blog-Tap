@@ -223,9 +223,11 @@ form .btn-danger:hover,
 }
 
 .grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto;
+    display: flex;
     padding: 10px;
+    flex-wrap: wrap;
+    position: relative;
+    left: 3%;
 }
 
 .grid-item {
@@ -234,8 +236,9 @@ form .btn-danger:hover,
     max-height: 100px;
     max-width: 100px;
     margin: 8px auto;
-    display: inline-block;
     padding: 0 0 0 0px;
+    width: 30%;
+    min-width: 30%;
 }
 
 input[type="radio"] {
@@ -245,6 +248,14 @@ input[type="radio"] {
 input[type="radio"]+label {
     opacity: 0.6;
     transition: 0.1s;
+    width: max-content;
+    border-radius: 50%;
+    width: 30%;
+    min-width: 30%;
+}
+
+input[type="radio"]+label:hover {
+    opacity: 0.8;
 }
 
 input[type="radio"]:checked+label {
@@ -257,7 +268,7 @@ input[type="radio"]:checked+label {
     height: 100px;
     width: 100px;
     margin: auto;
-    display: inline-block;
+    display: block;
     border-radius: 50%;
 }
 
@@ -289,5 +300,30 @@ input[type="radio"]:checked+label {
     }
     .grid-item {
         margin: 1px auto;
+    }
+}
+
+@media(max-width: 410px) {
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        padding: 10px;
+        left: 2%;
+    }
+    .grid-item {
+        font-size: 30px;
+        text-align: center;
+        max-height: 100px;
+        max-width: 100px;
+        margin: 8px 2px;
+        display: inline-block;
+        padding: 0 2px;
+        width: max-content;
+    }
+    .img-sel {
+        min-height: 80px;
+        min-width: 80px;
+        height: 80px;
+        width: 80px;
     }
 }
