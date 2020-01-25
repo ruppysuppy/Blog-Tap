@@ -29,6 +29,19 @@
                         <a class="nav-link nav-link-mod" href="{{url_for('core.about')}}">About</a>
                     </li>
                     {% if current_user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle nav-link-mod" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Notifications
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <div class="dropdown-divider"></div>
+                        </div>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link nav-link-mod" href="{{url_for('user.account')}}">Account</a>
                     </li>

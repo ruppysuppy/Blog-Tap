@@ -4,7 +4,7 @@
     <div align='center'>
         <h1 class="reactive-text-1">Welcome {{current_user.username}}</h1>
         <button class="acc-pic" type="button" data-toggle="modal" data-target="#exampleModalCenter">
-            <img id="profile-img" src="{{url_for('static', filename='img/profile_image/' + current_user.profile_image)}}" align='center' style="border-radius: 50%; height: 150px; width: 150px;">
+            <img id="profile-img" src="{{url_for('static', filename='img/profile_image/' + current_user.profile_image)}}" align='center'>
         </button>
         <p class="label-text">{{current_user.email}}</p>
     </div>
