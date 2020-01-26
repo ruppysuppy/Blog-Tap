@@ -77,3 +77,40 @@ class BlogPost(db.Model):
     
     def __repr__(self):
         return f"Post ID: {self.id} -- {self.date}\nTitle: {self.title.upper()}"
+
+####################################################
+# FOLLOWERS MODEL SETUP ############################
+####################################################
+
+class Followers(db.Model):
+    __tablename__ = 'Followers'
+
+    id = db.Column(db.Integer, primary_key=True)
+    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    def __init__(self, follower_id, followed_id):
+        self.follower_id = follower_id
+        self.followed_id = followed_id
+    
+    def __repr__(self):
+        return f"Follower ID: {self.follower_id}\tFollowed ID: {self.followed_id}"
+
+####################################################
+# NOTIFICATION MODEL SETUP #########################
+####################################################
+
+class Notifications(db.Model):
+    __tablename__ = 'Notifications'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    text = db.Column(db.String(150), nullable=False)
+
+    def __init__(self, user_id, text):
+        self.user_id = user_id
+        self.text = text
+    
+    def __repr__(self):
+        return f"User ID: {self.userer_id}\tTime: {self.date}\nText: {self.text}"

@@ -10,7 +10,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 ####################################################
 
 from blog import db
-from blog.models import User, BlogPost
+from blog.models import User, BlogPost, Notifications, Followers
 from blog.users.forms import Register, UpdateUserForm, LoginForm
 
 ####################################################
@@ -128,3 +128,33 @@ def user_posts(username):
     blog_posts = BlogPost.query.filter_by(author=user).order_by(BlogPost.views.desc()).paginate(page=page, per_page=10)
 
     return render_template('user_blog_posts.html', user=user, blog_posts=blog_posts)
+
+####################################################
+# FOLLOW USER ######################################
+####################################################
+
+@users.route("/follow/<user_id_1>/<user_id_2>")
+@login_required
+def follow(user_id_1, user_id_2):
+    user_id_1 = int(user_id_1)
+    user_id_2 = int(user_id_2)
+
+    temp = user_id_1
+
+    data = Followers.query.filter_by(follower_id=user_id_1, followed_id=user_id_2).all()
+
+    if (data):
+        flash(f"You are already following {user_id_2}")
+    else:
+        data = Followers(user_id_1, user_id_2)
+        db.session.add(data)
+        
+        notif = Notifications(temp, f'Started following {user_id_2}')
+        db.session.add(notif)
+        
+        db.session.commit()
+
+        flash(f'Following {user_id_2}!')
+
+    user = User.query.get_or_404(user_id_2)
+    return redirect(url_for('user.user_posts', username=user.username))

@@ -1,16 +1,18 @@
 {% extends 'base.html' %} {% block title %} {{post.title}} {% endblock title %} {% block content %}
 
 <div class="container">
-    <h1 class="reactive-text-1">Title: {{post.title}}</h1>
-    <h3 class="reactive-text-3">Author: <a href="{{url_for('user.user_posts', username=post.author.username)}}">{{post.author.username}}</a></h3 class="reactive-text-1">
-    <h5 class="text-muted reactive-text-5">Published: {{post.date.strftime("%d %B %Y")}}</h5>
-    <h5 class="text-muted reactive-text-5">Category: {{post.category}}</h5>
-    <h5 class="reactive-text-5">Views: {{post.views}}</h5>
-    <br> {{post.text|markdown}} {% if post.author == current_user %}
+    <div class="img-post" style="background-image: url({{url_for('static', filename='img/blog_background/'+post.category+'.jpg')}});"></div>
+    <div style="position: relative; top: -2rem;">
+        <h1 class="reactive-text-1">Title: {{post.title}}</h1>
+        <h3 class="reactive-text-3">Author: <a href="{{url_for('user.user_posts', username=post.author.username)}}">{{post.author.username}}</a></h3 class="reactive-text-1">
+        <h5 class="text-muted reactive-text-5">Published: {{post.date.strftime("%d %B %Y")}}</h5>
+        <h5 class="text-muted reactive-text-5">Category: {{post.category}}</h5>
+        <h5 class="reactive-text-5">Views: {{post.views}}</h5>
+        <br> {{post.text|markdown}} {% if post.author == current_user %}
 
-    <a href="{{url_for('blog_posts.update', blog_post_id=post.id)}}"> <button class="btn-normal">Update</button></a>
-    <button type="button" name="button" class="btn btn-danger" data-toggle="modal" data-target="#del_modal">Delete</button> {% endif %}
-
+        <a href="{{url_for('blog_posts.update', blog_post_id=post.id)}}"> <button class="btn-normal">Update</button></a>
+        <button type="button" name="button" class="btn btn-danger" data-toggle="modal" data-target="#del_modal">Delete</button> {% endif %}
+    </div>
 </div>
 
 <div class="modal" tabindex="-1" role="dialog" id="del_modal" style="z-index: 100000;">

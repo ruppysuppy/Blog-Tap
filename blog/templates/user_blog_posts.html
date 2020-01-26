@@ -4,6 +4,9 @@
     <div align="center">
         <img src="{{url_for('static', filename='img/profile_image/'+user.profile_image)}}" alt="Error! Picture not found." style="border-radius: 50%; height: 150px; width: 150px; margin-bottom: 8px;">
         <h1 class="reactive-text-1 text-break">{{user.username}}</h1>
+        <a href="{{url_for('user.follow', user_id_1=current_user.id, user_id_2=user.id)}}">
+            <button class="btn btn-primary">Follow!</button>
+        </a>
     </div>
 </div>
 

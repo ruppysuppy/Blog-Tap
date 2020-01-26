@@ -274,6 +274,16 @@ input[type="radio"]:checked+label {
     opacity: 1;
 }
 
+.img-post {
+    height: 60vh;
+    width: 120%;
+    position: relative;
+    left: -10%;
+    top: -5rem;
+    background-position: center;
+    background-size: cover;
+}
+
 .img-sel {
     min-height: 100px;
     min-width: 100px;
