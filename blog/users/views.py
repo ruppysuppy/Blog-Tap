@@ -115,7 +115,12 @@ def account():
     
     profile_image = url_for('static', filename='img/'+current_user.profile_image)
 
-    return render_template('account.html', profile_image=profile_image, form=form)
+    if (current_user.is_authenticated):
+        notifs = Notifications.query.filter_by(user_id=current_user.id).order_by(Notifications.date.desc()).all()
+    else:
+        notifs = []
+
+    return render_template('account.html', profile_image=profile_image, form=form, notifs=notifs)
 
 ####################################################
 # LIST BLOGS (USER SPECIFIC) #######################
@@ -127,7 +132,12 @@ def user_posts(username):
     user = User.query.filter_by(username=username).first_or_404()
     blog_posts = BlogPost.query.filter_by(author=user).order_by(BlogPost.views.desc()).paginate(page=page, per_page=10)
 
-    return render_template('user_blog_posts.html', user=user, blog_posts=blog_posts)
+    if (current_user.is_authenticated):
+        notifs = Notifications.query.filter_by(user_id=current_user.id).order_by(Notifications.date.desc()).all()
+    else:
+        notifs = []
+
+    return render_template('user_blog_posts.html', user=user, blog_posts=blog_posts, notifs=notifs)
 
 ####################################################
 # FOLLOW USER ######################################

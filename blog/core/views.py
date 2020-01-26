@@ -45,4 +45,9 @@ def index():
 
 @core.route('/about')
 def about():
-    return render_template('about.html')
+    if (current_user.is_authenticated):
+        notifs = Notifications.query.filter_by(user_id=current_user.id).order_by(Notifications.date.desc()).all()
+    else:
+        notifs = []
+    
+    return render_template('about.html', notifs=notifs)

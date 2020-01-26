@@ -10,7 +10,7 @@ from flask_login import current_user, login_required
 ####################################################
 
 from blog import db
-from blog.models import BlogPost, User
+from blog.models import BlogPost, User, Notifications
 from blog.post.forms import BlogPostForm
 
 ####################################################
@@ -38,7 +38,12 @@ def create_post():
         
         return redirect(url_for('core.index'))
 
-    return render_template('create_post.html', form=form)
+    if (current_user.is_authenticated):
+        notifs = Notifications.query.filter_by(user_id=current_user.id).order_by(Notifications.date.desc()).all()
+    else:
+        notifs = []
+
+    return render_template('create_post.html', form=form, notifs=notifs)
 
 ####################################################
 # BLOG POST VIEW SETUP #############################
@@ -57,7 +62,12 @@ def blog_post(blog_post_id):
         
         db.session.commit()
     
-    return render_template('blog_posts.html', title=post.title, date=post.date, post=post, category=post.category)
+    if (current_user.is_authenticated):
+        notifs = Notifications.query.filter_by(user_id=current_user.id).order_by(Notifications.date.desc()).all()
+    else:
+        notifs = []
+
+    return render_template('blog_posts.html', title=post.title, date=post.date, post=post, category=post.category, notifs=notifs)
 
 ####################################################
 # UPDATE POST SETUP ################################
@@ -87,7 +97,12 @@ def update(blog_post_id):
         form.text.data = post.text
         form.category.data = post.category
     
-    return render_template('create_post.html', form=form)
+    if (current_user.is_authenticated):
+        notifs = Notifications.query.filter_by(user_id=current_user.id).order_by(Notifications.date.desc()).all()
+    else:
+        notifs = []
+
+    return render_template('create_post.html', form=form, notifs=notifs)
 
 ####################################################
 # DELETE POST SETUP ################################
