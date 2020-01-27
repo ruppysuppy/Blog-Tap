@@ -10,7 +10,7 @@ from flask_login import current_user, login_required
 ####################################################
 
 from blog import db
-from blog.models import BlogPost, User, Notifications
+from blog.models import BlogPost, User, Notifications, Followers
 from blog.post.forms import BlogPostForm
 
 ####################################################
@@ -30,6 +30,12 @@ def create_post():
     
     if (form.validate_on_submit() or request.method == "POST"):
         post = BlogPost(title=form.title.data, category=form.category.data, text=form.text.data, user_id=current_user.id)
+
+        followers = Followers.query.filter_by(followed_id=current_user.id).all()
+
+        for follower in followers:
+            notif = Notifications(follower.follower_id, f'{current_user.username} has posted a blog "{form.title.data}"!')
+            db.session.add(notif)
 
         db.session.add(post)
         db.session.commit()
@@ -76,6 +82,7 @@ def blog_post(blog_post_id):
 @blog_posts.route('/<int:blog_post_id>/update', methods=["GET", "POST"])
 @login_required
 def update(blog_post_id):
+    blog_title = None
     post = BlogPost.query.get_or_404(blog_post_id)
 
     if (post.author != current_user):
@@ -88,12 +95,19 @@ def update(blog_post_id):
         post.text= form.text.data
         post.category = form.category.data
 
+        followers = Followers.query.filter_by(followed_id=current_user.id).all()
+
+        for follower in followers:
+            notif = Notifications(follower.follower_id, f'{current_user.username} has updated the blog "{blog_title}"!')
+            db.session.add(notif)
+
         db.session.commit()
         flash('Updated Post!')
         return redirect(url_for('blog_posts.blog_post', blog_post_id=post.id))
 
     if (request.method == "GET"):
         form.title.data = post.title
+        blog_title = post.title
         form.text.data = post.text
         form.category.data = post.category
     
@@ -115,6 +129,12 @@ def delete(blog_post_id):
 
     if (post.author != current_user):
         abort(403)
+    
+    followers = Followers.query.filter_by(followed_id=current_user.id).all()
+
+    for follower in followers:
+        notif = Notifications(follower.follower_id, f'{current_user.username} has deleted the blog "{post.title}"!')
+        db.session.add(notif)
     
     db.session.delete(post)
     db.session.commit()

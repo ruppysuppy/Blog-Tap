@@ -332,7 +332,9 @@ input[type="radio"]:checked+label {
 /* Scroll bar effects */
 
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 2px;
+    border-radius: 1px;
+    height: 2px;
 }
 
  ::-webkit-scrollbar-track {

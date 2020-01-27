@@ -126,7 +126,7 @@ def account():
 # LIST BLOGS (USER SPECIFIC) #######################
 ####################################################
 
-@users.route("/<username>")
+@users.route("/<string:username>")
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
@@ -149,23 +149,18 @@ def user_posts(username):
 # FOLLOW USER ######################################
 ####################################################
 
-@users.route("/follow/<user_id_1>/<user_id_2>")
+@users.route("/follow/<int:user_id_1>/<int:user_id_2>")
 @login_required
 def follow(user_id_1, user_id_2):
-    user_id_1 = int(user_id_1)
-    user_id_2 = int(user_id_2)
-
-    temp = user_id_1
-
     data = Followers.query.filter_by(follower_id=user_id_1, followed_id=user_id_2).all()
 
     if (data):
-        flash(f"You are already following {user_id_2}")
+        flash(f"You are already following {user_id_2}!")
     else:
         data = Followers(user_id_1, user_id_2)
         db.session.add(data)
         
-        notif = Notifications(temp, f'You started following {user_id_2}')
+        notif = Notifications(user_id_1, f'You started following {user_id_2}!')
         db.session.add(notif)
         
         db.session.commit()
@@ -179,22 +174,17 @@ def follow(user_id_1, user_id_2):
 # UNFOLLOW USER ####################################
 ####################################################
 
-@users.route("/unfollow/<user_id_1>/<user_id_2>")
+@users.route("/unfollow/<int:user_id_1>/<int:user_id_2>")
 @login_required
 def unfollow(user_id_1, user_id_2):
-    user_id_1 = int(user_id_1)
-    user_id_2 = int(user_id_2)
-
-    temp = user_id_1
-
     data = Followers.query.filter_by(follower_id=user_id_1, followed_id=user_id_2).first()
 
     if (not data):
-        flash(f"You don't follow {user_id_2}")
+        flash(f"You don't follow {user_id_2}!")
     else:
         db.session.delete(data)
         
-        notif = Notifications(temp, f'You stopped following {user_id_2}')
+        notif = Notifications(user_id_1, f'You stopped following {user_id_2}!')
         db.session.add(notif)
         
         db.session.commit()

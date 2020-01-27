@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.ico')}}" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Marvel&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{url_for('static', filename='style/base_style.css')}}">
 </head>
@@ -29,17 +30,6 @@
                         <a class="nav-link nav-link-mod" href="{{url_for('core.about')}}">About</a>
                     </li>
                     {% if current_user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle nav-link-mod" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Notifications
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="max-height: 200px; overflow-y: scroll;">
-                            {% if notifs %} {% for mess in notifs %}
-                            <a class="dropdown-item" href="#">{{mess.text}}</a> {% endfor %} {% else %}
-                            <p class="dropdown-item">You Don't have any Notification</p>
-                            {% endif %}
-                        </div>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link nav-link-mod" href="{{url_for('user.account')}}">Account</a>
                     </li>
@@ -48,6 +38,20 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-link-mod" href="{{url_for('user.logout')}}">Log Out</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle nav-link-mod" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-bell-o" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="max-height: 200px; max-width: 90vw; overflow-y: scroll;">
+                            {% if notifs %} {% for mess in notifs %}
+                            <a class="dropdown-item text-break" href="#">
+                                {{mess.text}}
+                                <strong class="text-muted" style="font-size: small; font-weight: 400;">{{mess.date.strftime("%d/%m/%Y")}}</strong>
+                            </a> {% endfor %} {% else %}
+                            <p class="dropdown-item">You Don't have any Notification</p>
+                            {% endif %}
+                        </div>
                     </li>
                     {% else %}
                     <li class="nav-item">
