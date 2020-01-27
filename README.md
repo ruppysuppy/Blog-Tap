@@ -20,7 +20,7 @@ Follow the steps to the local server on your machine:
 * Download and install Python 3.x
 * Download the repository
 * Extract the repository at the desired location
-* Navigate to the extrated folder
+* Navigate to the extracted folder
 * Open the Terminal/CMD/PowerShell at the location (Shift + Right Click => Run Command Prompt/PowerShell for Windows Users or Right Click => Run Terminal for Linux Users)
 * Run the Command 'pip install -r requirements.txt' (to install the dependencies NETWORK CONNECTION IS REQUIRED)
 * Run the Command 'python app.py'
