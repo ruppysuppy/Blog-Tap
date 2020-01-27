@@ -4,9 +4,15 @@
     <div align="center">
         <img src="{{url_for('static', filename='img/profile_image/'+user.profile_image)}}" alt="Error! Picture not found." style="border-radius: 50%; height: 150px; width: 150px; margin-bottom: 8px;">
         <h1 class="reactive-text-1 text-break">{{user.username}}</h1>
+        {% if current_user.is_authenticated %} {% if current_user != user %} {% if can_follow %}
         <a href="{{url_for('user.follow', user_id_1=current_user.id, user_id_2=user.id)}}">
-            <button class="btn btn-primary">Follow!</button>
+            <button class="btn-follow">Follow!</button>
         </a>
+        {% else %}
+        <a href="{{url_for('user.unfollow', user_id_1=current_user.id, user_id_2=user.id)}}">
+            <button class="btn-unfollow">UnFollow!</button>
+        </a>
+        {% endif %} {% endif %} {% endif %}
     </div>
 </div>
 
@@ -16,7 +22,6 @@
     <div class="container card-container" style="display: flex; flex-wrap: wrap;">
         {% for post in blog_posts.items %}
         <a href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}" class="blog-card" style="font-weight: 700;">
-            <!-- <div class="row blog-card"> -->
             <div class="card-img">
                 <div class="img" style="background-image: url({{url_for('static', filename='img/blog_background/'+post.category+'.jpg')}});"></div>
             </div>
@@ -45,17 +50,19 @@
 
 <nav aria-label="Page Navigation example">
     <ul class="pagination justify-content-center">
-
-        {% for page_num in blog_posts.iter_pages(left_edge=1) %} {% if blog_posts.page == page_num %}
+        {% for page_num in blog_posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} {% if blog_posts.page == page_num %}
         <li class="page-item active">
             <a class="page-link active" href="{{url_for('user.user_posts', username=user.username, page=page_num)}}">{{page_num}}</a>
         </li>
-        {% else %}
+        {% else %} {% if page_num %}
         <li class="page-item">
             <a class="page-link" href="{{url_for('user.user_posts', username=user.username, page=page_num)}}">{{page_num}}</a>
         </li>
-        {% endif %} {% endfor %}
-
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" aria-disabled="true">...</a>
+        </li>
+        {% endif %} {% endif %} {% endfor %}
     </ul>
 </nav>
 

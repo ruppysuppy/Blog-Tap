@@ -154,9 +154,9 @@ form .btn-danger:hover,
 }
 
 .blog-card {
-    width: 48%;
-    min-width: 48%;
-    max-width: 48%;
+    width: 31%;
+    min-width: 31%;
+    max-width: 31%;
     border-radius: 16px;
     border: 2px solid #151D33;
     margin: 8px;
@@ -292,6 +292,59 @@ input[type="radio"]:checked+label {
     margin: auto;
     display: block;
     border-radius: 50%;
+}
+
+.btn-follow {
+    transition: 0.1s;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: 700;
+    font-size: large;
+    border: none;
+    color: #151D33;
+    background-color: #0CFFA6;
+}
+
+.btn-follow:hover {
+    transform: scale(1.05);
+    color: white;
+    background-color: rgb(5, 120, 80);
+}
+
+.btn-unfollow {
+    transition: 0.1s;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: 700;
+    font-size: large;
+    border: none;
+    color: rgb(255, 60, 60);
+    background-color: rgb(150, 150, 150);
+}
+
+.btn-unfollow:hover {
+    transform: scale(1.05);
+    color: white;
+    background-color: rgb(255, 25, 25);
+}
+
+
+/* Scroll bar effects */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+ ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+ ::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 @media(max-width: 990px) {

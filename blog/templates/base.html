@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='style/base_style.css')}}">
 </head>
 
-<body style="width: 100vw; overflow-x: hidden;">
+<body style="width: 100vw; overflow-x: hidden; overflow-y: scroll;">
     <div class="background" style="height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; z-index: -10; background-image: url({{url_for('static', filename='img/background.png')}});"></div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: fixed; top: 0; left: 0; width: 100vw; background-color: #151D33 !important; z-index: 9999;">
         <div class="container">
@@ -33,11 +33,11 @@
                         <a class="nav-link dropdown-toggle nav-link-mod" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Notifications
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            {% for mess in notifs %}
-                            <a class="dropdown-item" href="#">{{mess.text}}</a>
-                            <div class="dropdown-divider"></div>
-                            {% endfor %}
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="max-height: 200px; overflow-y: scroll;">
+                            {% if notifs %} {% for mess in notifs %}
+                            <a class="dropdown-item" href="#">{{mess.text}}</a> {% endfor %} {% else %}
+                            <p class="dropdown-item">You Don't have any Notification</p>
+                            {% endif %}
                         </div>
                     </li>
                     <li class="nav-item">

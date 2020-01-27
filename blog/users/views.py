@@ -130,14 +130,20 @@ def account():
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
-    blog_posts = BlogPost.query.filter_by(author=user).order_by(BlogPost.views.desc()).paginate(page=page, per_page=10)
+    blog_posts = BlogPost.query.filter_by(author=user).order_by(BlogPost.views.desc(), BlogPost.date.desc()).paginate(page=page, per_page=6)
 
+    get_following = Followers.query.filter(Followers.follower_id==current_user.id, Followers.followed_id==user.id).first()
+    if (get_following):
+        can_follow = False
+    else:
+        can_follow = True
+    
     if (current_user.is_authenticated):
         notifs = Notifications.query.filter_by(user_id=current_user.id).order_by(Notifications.date.desc()).all()
     else:
         notifs = []
 
-    return render_template('user_blog_posts.html', user=user, blog_posts=blog_posts, notifs=notifs)
+    return render_template('user_blog_posts.html', user=user, blog_posts=blog_posts, notifs=notifs, can_follow=can_follow)
 
 ####################################################
 # FOLLOW USER ######################################
@@ -159,12 +165,41 @@ def follow(user_id_1, user_id_2):
         data = Followers(user_id_1, user_id_2)
         db.session.add(data)
         
-        notif = Notifications(temp, f'Started following {user_id_2}')
+        notif = Notifications(temp, f'You started following {user_id_2}')
         db.session.add(notif)
         
         db.session.commit()
 
-        flash(f'Following {user_id_2}!')
+        flash(f'You are following {user_id_2}!')
+
+    user = User.query.get_or_404(user_id_2)
+    return redirect(url_for('user.user_posts', username=user.username))
+
+####################################################
+# UNFOLLOW USER ####################################
+####################################################
+
+@users.route("/unfollow/<user_id_1>/<user_id_2>")
+@login_required
+def unfollow(user_id_1, user_id_2):
+    user_id_1 = int(user_id_1)
+    user_id_2 = int(user_id_2)
+
+    temp = user_id_1
+
+    data = Followers.query.filter_by(follower_id=user_id_1, followed_id=user_id_2).first()
+
+    if (not data):
+        flash(f"You don't follow {user_id_2}")
+    else:
+        db.session.delete(data)
+        
+        notif = Notifications(temp, f'You stopped following {user_id_2}')
+        db.session.add(notif)
+        
+        db.session.commit()
+
+        flash(f'You unfollowed {user_id_2}!')
 
     user = User.query.get_or_404(user_id_2)
     return redirect(url_for('user.user_posts', username=user.username))
