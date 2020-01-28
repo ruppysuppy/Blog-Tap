@@ -351,10 +351,8 @@ input[type="radio"]:checked+label {
 
 @media(max-width: 990px) {
     .blog-card {
-        margin: auto;
-        width: 85%;
-        min-width: 85%;
-        width: 85%;
+        min-width: 45%;
+        width: 45%;
         margin-bottom: 16px;
     }
     .img {
@@ -362,6 +360,14 @@ input[type="radio"]:checked+label {
     }
     a {
         font-size: small;
+    }
+}
+
+@media(max-width: 768px) {
+    .blog-card {
+        min-width: 85%;
+        width: 85%;
+        margin: 10px auto;
     }
 }
 
