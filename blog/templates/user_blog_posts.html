@@ -4,7 +4,9 @@
     <div align="center">
         <img src="{{url_for('static', filename='img/profile_image/'+user.profile_image)}}" alt="Error! Picture not found." style="border-radius: 50%; height: 150px; width: 150px; margin-bottom: 8px;">
         <h1 class="reactive-text-1 text-break">{{user.username}}</h1>
-        {% if current_user.is_authenticated %} {% if current_user != user %} {% if can_follow %}
+        {% if current_user.is_authenticated %} {% if current_user != user %}
+        <h3 class="reactive-text-3 text-break">Followers: {{followers_count}}</h3>
+        {% if can_follow %}
         <a href="{{url_for('user.follow', user_id_1=current_user.id, user_id_2=user.id)}}">
             <button class="btn-follow">Follow!</button>
         </a>
@@ -37,7 +39,6 @@
                     <p class="card-text" style="padding-top: 0; margin-top: 0;">Category: {{post.category}}</p class="card-text">
                 </div>
             </div>
-            <!-- </div> -->
         </a>
         {% endfor %}
     </div>
@@ -52,11 +53,11 @@
     <ul class="pagination justify-content-center">
         {% for page_num in blog_posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} {% if blog_posts.page == page_num %}
         <li class="page-item active">
-            <a class="page-link active" href="{{url_for('user.user_posts', username=user.username, page=page_num)}}">{{page_num}}</a>
+            <a class="page-link active" href="{{url_for('user.user_posts', user_id=user.id, page=page_num)}}">{{page_num}}</a>
         </li>
         {% else %} {% if page_num %}
         <li class="page-item">
-            <a class="page-link" href="{{url_for('user.user_posts', username=user.username, page=page_num)}}">{{page_num}}</a>
+            <a class="page-link" href="{{url_for('user.user_posts', user_id=user.id, page=page_num)}}">{{page_num}}</a>
         </li>
         {% else %}
         <li class="page-item">

@@ -33,7 +33,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(64), unique=True, index=True)
     username = db.Column(db.String(64), index=True)
     password_hash = db.Column(db.String(64))
-    confirmed = db.Column(db.Integer, nullable=False)
+    confirmed = db.Column(db.Boolean, nullable=False)
     last_viewed_catagory = db.Column(db.String(64), index=True)
 
     posts = db.relationship('BlogPost', backref='author', lazy=True)
@@ -42,7 +42,7 @@ class User(db.Model, UserMixin):
         self.username = username
         self.email = email
         self.password_hash = generate_password_hash(password)
-        self.confirmed = 0
+        self.confirmed = False
         self.profile_image = "profile_img_" + str(randint(1, 9)) + ".png"
     
     def check_password(self, password):
@@ -107,10 +107,14 @@ class Notifications(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     text = db.Column(db.String(150), nullable=False)
+    link_id = db.Column(db.Integer, nullable=False)
+    is_blog = db.Column(db.Boolean, nullable=False)
 
-    def __init__(self, user_id, text):
+    def __init__(self, user_id, text, link_id, is_blog):
         self.user_id = user_id
         self.text = text
+        self.link_id = link_id
+        self.is_blog = is_blog
     
     def __repr__(self):
         return f"User ID: {self.userer_id}\tTime: {self.date}\nText: {self.text}"

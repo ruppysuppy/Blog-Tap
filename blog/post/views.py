@@ -30,11 +30,13 @@ def create_post():
     
     if (form.validate_on_submit() or request.method == "POST"):
         post = BlogPost(title=form.title.data, category=form.category.data, text=form.text.data, user_id=current_user.id)
+        db.session.add(post)
+        db.session.commit()
 
         followers = Followers.query.filter_by(followed_id=current_user.id).all()
 
         for follower in followers:
-            notif = Notifications(follower.follower_id, f'{current_user.username} has posted a blog "{form.title.data}"!')
+            notif = Notifications(follower.follower_id, f'{current_user.username} has posted a blog "{form.title.data}"!', post.id, True)
             db.session.add(notif)
 
         db.session.add(post)
@@ -55,7 +57,7 @@ def create_post():
 # BLOG POST VIEW SETUP #############################
 ####################################################
 
-@blog_posts.route('/<int:blog_post_id>')
+@blog_posts.route('/blog/<int:blog_post_id>')
 def blog_post(blog_post_id):
     post = BlogPost.query.get_or_404(blog_post_id)
 
@@ -98,7 +100,7 @@ def update(blog_post_id):
         followers = Followers.query.filter_by(followed_id=current_user.id).all()
 
         for follower in followers:
-            notif = Notifications(follower.follower_id, f'{current_user.username} has updated the blog "{blog_title}"!')
+            notif = Notifications(follower.follower_id, f'{current_user.username} has updated the blog "{blog_title}"!', post.id, True)
             db.session.add(notif)
 
         db.session.commit()
@@ -133,7 +135,7 @@ def delete(blog_post_id):
     followers = Followers.query.filter_by(followed_id=current_user.id).all()
 
     for follower in followers:
-        notif = Notifications(follower.follower_id, f'{current_user.username} has deleted the blog "{post.title}"!')
+        notif = Notifications(follower.follower_id, f'{current_user.username} has deleted the blog "{post.title}"!', post.author.id, False)
         db.session.add(notif)
     
     db.session.delete(post)

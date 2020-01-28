@@ -126,24 +126,32 @@ def account():
 # LIST BLOGS (USER SPECIFIC) #######################
 ####################################################
 
-@users.route("/<string:username>")
-def user_posts(username):
+@users.route("/user/<int:user_id>")
+def user_posts(user_id):
     page = request.args.get('page', 1, type=int)
-    user = User.query.filter_by(username=username).first_or_404()
+    user = User.query.filter_by(id=user_id).first_or_404()
     blog_posts = BlogPost.query.filter_by(author=user).order_by(BlogPost.views.desc(), BlogPost.date.desc()).paginate(page=page, per_page=6)
 
-    get_following = Followers.query.filter(Followers.follower_id==current_user.id, Followers.followed_id==user.id).first()
-    if (get_following):
-        can_follow = False
+    followers_count = db.engine.execute(f"select count(*) as count   \
+                                          from Followers             \
+                                          where followed_id={user.id}").scalar()
+
+    if (current_user.is_authenticated):
+        get_following = Followers.query.filter(Followers.follower_id==current_user.id, Followers.followed_id==user.id).first()
+        if (get_following):
+            can_follow = False
+        else:
+            can_follow = True
     else:
-        can_follow = True
+        get_following = False
+        can_follow = False
     
     if (current_user.is_authenticated):
         notifs = Notifications.query.filter_by(user_id=current_user.id).order_by(Notifications.date.desc()).all()
     else:
         notifs = []
 
-    return render_template('user_blog_posts.html', user=user, blog_posts=blog_posts, notifs=notifs, can_follow=can_follow)
+    return render_template('user_blog_posts.html', user=user, blog_posts=blog_posts, notifs=notifs, can_follow=can_follow, followers_count=followers_count)
 
 ####################################################
 # FOLLOW USER ######################################
@@ -160,7 +168,7 @@ def follow(user_id_1, user_id_2):
         data = Followers(user_id_1, user_id_2)
         db.session.add(data)
         
-        notif = Notifications(user_id_1, f'You started following {user_id_2}!')
+        notif = Notifications(user_id_1, f'You started following {user_id_2}!', user_id_2, False)
         db.session.add(notif)
         
         db.session.commit()
@@ -168,7 +176,7 @@ def follow(user_id_1, user_id_2):
         flash(f'You are following {user_id_2}!')
 
     user = User.query.get_or_404(user_id_2)
-    return redirect(url_for('user.user_posts', username=user.username))
+    return redirect(url_for('user.user_posts', user_id=user.id))
 
 ####################################################
 # UNFOLLOW USER ####################################
@@ -184,7 +192,7 @@ def unfollow(user_id_1, user_id_2):
     else:
         db.session.delete(data)
         
-        notif = Notifications(user_id_1, f'You stopped following {user_id_2}!')
+        notif = Notifications(user_id_1, f'You stopped following {user_id_2}!', user_id_2, False)
         db.session.add(notif)
         
         db.session.commit()
@@ -192,4 +200,4 @@ def unfollow(user_id_1, user_id_2):
         flash(f'You unfollowed {user_id_2}!')
 
     user = User.query.get_or_404(user_id_2)
-    return redirect(url_for('user.user_posts', username=user.username))
+    return redirect(url_for('user.user_posts', user_id=user.id))

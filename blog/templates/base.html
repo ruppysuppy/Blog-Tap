@@ -40,15 +40,19 @@
                         <a class="nav-link nav-link-mod" href="{{url_for('user.logout')}}">Log Out</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle nav-link-mod" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle nav-link-mod" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: max-content;">
                             <i class="fa fa-bell-o" aria-hidden="true"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="max-height: 200px; max-width: 90vw; overflow-y: scroll;">
-                            {% if notifs %} {% for mess in notifs %}
-                            <a class="dropdown-item text-break" href="#">
-                                {{mess.text}}
-                                <strong class="text-muted" style="font-size: small; font-weight: 400;">{{mess.date.strftime("%d/%m/%Y")}}</strong>
-                            </a> {% endfor %} {% else %}
+                            {% if notifs %} {% for mess in notifs %} {% if mess.is_blog %}
+                            <a class="dropdown-item text-break" href="{{url_for('blog_posts.blog_post', blog_post_id=mess.link_id)}}">
+                                <strong class="text-muted" style="font-size: small; font-weight: 400;">{{mess.date.strftime("%d/%m/%Y")}}: </strong> {{mess.text}}
+                            </a>
+                            {% else %}
+                            <a class="dropdown-item text-break" href="{{url_for('user.user_posts', user_id=mess.link_id)}}">
+                                <strong class="text-muted" style="font-size: small; font-weight: 400;">{{mess.date.strftime("%d/%m/%Y")}}: </strong> {{mess.text}}
+                            </a>
+                            {% endif %} {% endfor %} {% else %}
                             <p class="dropdown-item">You Don't have any Notification</p>
                             {% endif %}
                         </div>

@@ -4,7 +4,7 @@
     <div class="img-post" style="background-image: url({{url_for('static', filename='img/blog_background/'+post.category+'.jpg')}});"></div>
     <div style="position: relative; top: -2rem;">
         <h1 class="reactive-text-1">Title: {{post.title}}</h1>
-        <h3 class="reactive-text-3">Author: <a href="{{url_for('user.user_posts', username=post.author.username)}}">{{post.author.username}}</a></h3 class="reactive-text-1">
+        <h3 class="reactive-text-3">Author: <a href="{{url_for('user.user_posts', user_id=post.author.id)}}">{{post.author.username}}</a></h3 class="reactive-text-1">
         <h5 class="text-muted reactive-text-5">Published: {{post.date.strftime("%d %B %Y")}}</h5>
         <h5 class="text-muted reactive-text-5">Category: {{post.category}}</h5>
         <h5 class="reactive-text-5">Views: {{post.views}}</h5>
