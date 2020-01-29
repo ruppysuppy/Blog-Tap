@@ -26,3 +26,7 @@ Follow the steps to the local server on your machine:
 * Run the Command 'pip install -r requirements.txt' (to install the dependencies NETWORK CONNECTION IS REQUIRED)
 * Run the Command 'python app.py'
 * Run the website (Navigate to '127.0.0.1:8000' on a web-browser)
+
+### NOTE
+The expiration of the notification is set to 14 days and the expiration of the blogs viewed is 2 days.
+This means the views on the blog will be incremented only if the user reads the blog again after 2 days after reading it once and the recently read blog won't show up in the recommended section (for 2 days).
