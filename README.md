@@ -10,6 +10,7 @@ This project uses the following technologies:
 * Flask-SQLAlchemy 2.4.1
 * Flask-WTF 0.14.2
 * Jinja2 2.10.3
+* Misaka 2.1.1
 * WTForms 2.2.1
 * Werkzeug 0.16.0
 * HTML 5

@@ -10,7 +10,7 @@ from flask_login import current_user, login_required
 ####################################################
 
 from blog import db
-from blog.models import BlogPost, User, Notifications, Followers
+from blog.models import BlogPost, User, Notifications, Followers, View
 from blog.post.forms import BlogPostForm
 
 ####################################################
@@ -61,14 +61,19 @@ def create_post():
 def blog_post(blog_post_id):
     post = BlogPost.query.get_or_404(blog_post_id)
 
-    if ((current_user.is_authenticated and current_user.email != post.author.email) or (not current_user.is_authenticated)):
-        post.views += 1
-
-        if (current_user.is_authenticated):
-            user = User.query.get_or_404(current_user.id)
-            user.last_viewed_catagory = post.category
+    if (current_user.is_authenticated and current_user.email != post.author.email):
+        user = User.query.get_or_404(current_user.id)
+        user.last_viewed_catagory = post.category
         
         db.session.commit()
+
+        view = View.query.filter_by(user_id=current_user.id, blog_id=blog_post_id).first()
+
+        if (not view):
+            post.views += 1
+            view = View(current_user.id, blog_post_id)
+            db.session.add(view)
+            db.session.commit()
     
     if (current_user.is_authenticated):
         notifs = Notifications.query.filter_by(user_id=current_user.id).order_by(Notifications.date.desc()).all()

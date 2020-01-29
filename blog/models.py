@@ -10,7 +10,7 @@ from blog import db, login_manager
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from datetime import datetime
+from datetime import datetime, timedelta
 from random import randint
 
 ####################################################
@@ -118,3 +118,36 @@ class Notifications(db.Model):
     
     def __repr__(self):
         return f"User ID: {self.userer_id}\tTime: {self.date}\nText: {self.text}"
+    
+    @classmethod
+    def delete_expired(cls):
+        expiration_days = 14
+        limit = datetime.now() - timedelta(days=expiration_days)
+        cls.query.filter(cls.date <= limit).delete()
+        db.session.commit()
+
+####################################################
+# VIEW MODEL SETUP #################################
+####################################################
+
+class View(db.Model):
+    __tablename__ = 'View'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    blog_id = db.Column(db.Integer, db.ForeignKey('BlogPost.id'), nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    def __init__(self, user_id, blog_id):
+        self.user_id = user_id
+        self.blog_id = blog_id
+    
+    def __repr__(self):
+        return f"User ID: {self.userer_id}\tBlog ID: {self.blog_id}"
+
+    @classmethod
+    def delete_expired(cls):
+        expiration_days = 2
+        limit = datetime.now() - timedelta(days=expiration_days)
+        cls.query.filter(cls.timestamp <= limit).delete()
+        db.session.commit()

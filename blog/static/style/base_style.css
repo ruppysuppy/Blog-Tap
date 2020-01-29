@@ -328,15 +328,15 @@ input[type="radio"]:checked+label {
     background-color: rgb(255, 25, 25);
 }
 
-.dropdown-item {
+a.dropdown-item {
     transition: 0.1s;
 }
 
-.dropdown-item:hover,
-.dropdown-item:focus {
+a.dropdown-item:hover,
+a.dropdown-item:focus {
     background-color: #0CFFA6;
     color: #151D33;
-    transform: scale(0.9) translateX(-12px);
+    transform: scale(0.95);
 }
 
 

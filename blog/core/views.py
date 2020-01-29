@@ -9,7 +9,7 @@ from flask_login import current_user
 # IMPORTS (LOCAL) ##################################
 ####################################################
 
-from blog.models import BlogPost, Notifications
+from blog.models import BlogPost, Notifications, View
 from blog import db
 
 ####################################################
@@ -24,6 +24,9 @@ core = Blueprint('core', __name__)
 
 @core.route('/')
 def index():
+    View.delete_expired()
+    Notifications.delete_expired()
+    
     page = request.args.get('page', 1, type=int)
 
     blog_posts = BlogPost.query.order_by(BlogPost.views.desc(), BlogPost.date.desc()).paginate(page=page, per_page=6)
