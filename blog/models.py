@@ -34,7 +34,9 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(64), index=True)
     password_hash = db.Column(db.String(64))
     confirmed = db.Column(db.Boolean, nullable=False)
-    last_viewed_catagory = db.Column(db.String(64), index=True)
+    last_viewed_catagory1 = db.Column(db.String(64), index=True)
+    last_viewed_catagory2 = db.Column(db.String(64), index=True)
+    last_viewed_catagory3 = db.Column(db.String(64), index=True)
 
     posts = db.relationship('BlogPost', backref='author', lazy=True)
 

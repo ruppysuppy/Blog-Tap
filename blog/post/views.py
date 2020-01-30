@@ -63,7 +63,9 @@ def blog_post(blog_post_id):
 
     if (current_user.is_authenticated and current_user.email != post.author.email):
         user = User.query.get_or_404(current_user.id)
-        user.last_viewed_catagory = post.category
+        user.last_viewed_catagory3 = user.last_viewed_catagory2
+        user.last_viewed_catagory2 = user.last_viewed_catagory1
+        user.last_viewed_catagory1 = post.category
         
         db.session.commit()
 

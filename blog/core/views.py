@@ -35,7 +35,8 @@ def index():
                                   from View             \
                                   where user_id={current_user.id}')
         viewed = [id_blog[0] for id_blog in ids]
-        recommended = BlogPost.query.filter_by(category=current_user.last_viewed_catagory).filter(BlogPost.author!=current_user, ~(BlogPost.id.in_(viewed))).order_by(BlogPost.views.desc(), BlogPost.date.desc()).paginate(page=page, per_page=3, error_out=False)
+        categories = [current_user.last_viewed_catagory1, current_user.last_viewed_catagory2, current_user.last_viewed_catagory3]
+        recommended = BlogPost.query.filter(BlogPost.category.in_(categories), BlogPost.author!=current_user, ~(BlogPost.id.in_(viewed))).order_by(BlogPost.views.desc(), BlogPost.date.desc()).paginate(page=page, per_page=3, error_out=False)
     else:
         recommended = None
     
