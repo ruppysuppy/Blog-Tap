@@ -12,6 +12,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from blog import db
 from blog.models import User, BlogPost, Notifications, Followers
 from blog.users.forms import Register, UpdateUserForm, LoginForm
+from blog.users.password import is_strong
 
 ####################################################
 # BLUEPRINT SETUP ##################################
@@ -31,13 +32,17 @@ def register():
         user = User.query.filter_by(email=form.email.data).first()
 
         if (user == None):
-            user = User(email=form.email.data, username=form.username.data, password=form.password.data)
-            db.session.add(user)
-            db.session.commit()
+            if (is_strong(form.password.data)):
+                user = User(email=form.email.data, username=form.username.data, password=form.password.data)
+                db.session.add(user)
+                db.session.commit()
 
-            flash(f'Thankyou for registering at Blog Tap. Welcome {form.username.data}!')
+                flash(f'Thankyou for registering at Blog Tap. Welcome {form.username.data}!')
 
-            return redirect(url_for('user.login'))
+                return redirect(url_for('user.login'))
+            else:
+                flash('Use a strong password (1 Upper and 1 lower case characters, 1 number, 1 symbol and minimum length of 6)')
+                return redirect(url_for('user.register'))
         
         else:
             flash('Email already registered')

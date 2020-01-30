@@ -4,26 +4,26 @@
     <form class="form-group" method="POST">
         {{form.hidden_tag()}}
         <div class="form-group">
-            {{form.title.label(class='form-control-label')}}
-            <br> {{form.title(class='form-control form-control-lg form-input-normal')}}
+            {{form.title.label(class='form-control-label text-normal-media-small')}}
+            <br> {{form.title(class='form-control form-control-lg form-input-normal text-normal-media-small')}}
         </div>
         <div class="form-group">
-            {{form.category.label(class='form-control-label')}}
-            <br> {{form.category(class='form-control form-control-lg form-input-normal')}}
+            {{form.category.label(class='form-control-label text-normal-media-small')}}
+            <br> {{form.category(class='form-control form-control-lg form-input-normal text-normal-media-small')}}
         </div>
         <div class="form-group">
-            {{form.text.label(class='form-control-label')}}
-            <br> {{form.text(class='form-control form-control-lg form-input-normal', rows=8)}}
+            {{form.text.label(class='form-control-label text-normal-media-small')}}
+            <br> {{form.text(class='form-control form-control-lg form-input-normal text-normal-media-small', rows=8)}}
         </div>
-        <div style="vertical-align: middle;">
+        <div style="vertical-align: middle;" class="text-normal-media-small">
             <div style="display: inline-block; width: 25px; height: 25px; border-radius: 50%; border: 2px solid blue; color: blue; position: relative; top: 2px;" align='center'>
-                <strong style="position: relative; top: -2px; color: blue;">i</strong>
+                <strong style="position: relative; top: -2px; color: blue; font-size: medium;">i</strong>
             </div>
             <strong style="color: blue;">NOTE:</strong> You can use <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"> Markdown </a> to style your blog text
         </div>
         <br>
         <div class="form-group">
-            {{form.submit}}
+            {{form.submit(class='text-normal-media-small')}}
         </div>
     </form>
 </div>

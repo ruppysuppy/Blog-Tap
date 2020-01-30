@@ -1,15 +1,15 @@
 {% extends 'base.html' %} {% block title %} Resgister {% endblock title %} {% block content %}
 
 <form method="POST">
-    {{form.hidden_tag()}} {{form.email.label(class='label-text')}}
-    <br> {{form.email(class='col-sm-4', placeholder='Enter email-id')}}
-    <br><br> {{form.username.label(class='label-text')}}
-    <br> {{form.username(class='col-sm-4', placeholder='Enter username')}}
-    <br><br> {{form.password.label(class='label-text')}}
-    <br> {{form.password(class='col-sm-4', placeholder='Enter password')}}
-    <br><br> {{form.pass_confirm.label(class='label-text')}}
-    <br> {{form.pass_confirm(class='col-sm-4', placeholder='Re-Type password')}}
-    <br><br> {{form.submit}}
+    {{form.hidden_tag()}} {{form.email.label(class='label-text text-normal-media-small')}}
+    <br> {{form.email(class='col-sm-4 text-normal-media-small', placeholder='Enter email-id')}}
+    <br><br> {{form.username.label(class='label-text text-normal-media-small')}}
+    <br> {{form.username(class='col-sm-4 text-normal-media-small', placeholder='Enter username')}}
+    <br><br> {{form.password.label(class='label-text text-normal-media-small')}}
+    <br> {{form.password(class='col-sm-4 text-normal-media-small', placeholder='Enter password')}}
+    <br><br> {{form.pass_confirm.label(class='label-text text-normal-media-small')}}
+    <br> {{form.pass_confirm(class='col-sm-4 text-normal-media-small', placeholder='Re-Type password')}}
+    <br><br> {{form.submit(class='text-normal-media-small')}}
 </form>
 
 {% endblock content %}

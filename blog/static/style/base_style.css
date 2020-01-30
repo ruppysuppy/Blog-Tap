@@ -395,6 +395,9 @@ a.dropdown-item:focus {
     .grid-item {
         margin: 1px auto;
     }
+    .text-normal-media-small {
+        font-size: small;
+    }
 }
 
 @media(max-width: 410px) {

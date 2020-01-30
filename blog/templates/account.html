@@ -14,11 +14,11 @@
     <form method="POST" action="" enctype="multipart/form-data">
         {{form.hidden_tag()}}
         <div class="form-group">
-            {{form.username.label(class='label-text')}}
-            <br> {{form.username(class='form-control form-input-normal')}}
+            {{form.username.label(class='label-text text-normal-media-small')}}
+            <br> {{form.username(class='form-control form-input-normal text-normal-media-small')}}
         </div>
         <div class="form-group">
-            {{form.submit}}
+            {{form.submit(class='text-normal-media-small')}}
         </div>
     </form>
 </div>

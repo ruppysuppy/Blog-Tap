@@ -2,11 +2,11 @@
 
 <div class="container">
     <form method="POST" class="col-sm">
-        {{form.hidden_tag()}} {{form.email.label(class='label-text')}}
-        <br> {{form.email(class='col-sm-4', placeholder='Email ID')}}
-        <br><br> {{form.password.label(class='label-text')}}
-        <br> {{form.password(class='col-sm-4', placeholder='Password')}}
-        <br><br> {{form.submit}}
+        {{form.hidden_tag()}} {{form.email.label(class='label-text text-normal-media-small')}}
+        <br> {{form.email(class='col-sm-4 text-normal-media-small', placeholder='Email ID')}}
+        <br><br> {{form.password.label(class='label-text text-normal-media-small')}}
+        <br> {{form.password(class='col-sm-4 text-normal-media-small', placeholder='Password')}}
+        <br><br> {{form.submit(class='text-normal-media-small')}}
     </form>
 </div>
 {% endblock content %}
