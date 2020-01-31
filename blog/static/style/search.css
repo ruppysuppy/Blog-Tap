@@ -1,0 +1,29 @@
+.btn-container-tab {
+    margin: auto;
+    display: flex;
+}
+
+.btn-tab {
+    font-size: larger;
+    border-radius: 8px;
+    background-color: green;
+    color: #151D33;
+    margin: 8px 16px;
+    padding: 8px 16px;
+    transition: 0.1s;
+}
+
+.btn-tab:hover {
+    color: white;
+    background-color: rgb(0, 68, 0);
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .btn-tab {
+        font-size: medium;
+        border-radius: 6px;
+        margin: 8px;
+        padding: 6px 12px;
+    }
+}

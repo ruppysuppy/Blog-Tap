@@ -32,7 +32,7 @@ def num_char_different(str1, str2):
 ####################################################
 
 def similarity(str1, str2):
-    diff = num_char_different(str1, str2)
+    diff = num_char_different(str1.lower(), str2.lower())
     length = max(len(str1), len(str2))
 
     return (1 - (diff / length))

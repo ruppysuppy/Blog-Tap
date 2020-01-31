@@ -1,8 +1,18 @@
-{% extends 'base.html' %} {% block title %} Search {% endblock title %} {% block content %}
+{% extends 'base.html' %} {% block title %} Search {% endblock title %} {% block content %} {% block links %}
+<link rel="stylesheet" href="{{url_for('static', filename='style/search.css')}}"> {% endblock links %}
 
 <div class="container">
     <div align="center">
-        <h1 class="reactive-text-1 text-break">Searching for: {{param}}</h1>
+        <h1 class="reactive-text-1 text-break">Results for: {{param}}</h1>
+    </div>
+</div>
+
+<div class="btn-container-tab" align="center">
+    <div id="user-btn" class="btn-tab">
+        <i class="fa fa-user" aria-hidden="true"></i> USERS
+    </div>
+    <div id="blog-btn" class="btn-tab">
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> BLOGS
     </div>
 </div>
 
@@ -42,8 +52,11 @@
     <div class="container card-container" style="display: flex; flex-wrap: wrap;">
         {% for user in users %}
         <a href="{{url_for('user.user_posts', user_id=user.id)}}" class="blog-card" style="font-weight: 700;">
-            <img src="{{url_for('static', filename='img/profile_image/'+user.profile_image)}}" alt="Error! Picture not found." style="border-radius: 50%; height: 75px; width: 75px; margin-bottom: 8px;">
-            <h3 class="reactive-text-3 text-break">{{user.username}}</h3>
+            <div style="padding: 0; margin: 0;" align='center'>
+                <img src="{{url_for('static', filename='img/profile_image/'+user.profile_image)}}" alt="Error! Picture not found." style="border-radius: 50%; height: 150px; width: 150px; margin: 16px 0;">
+                <br>
+                <h3 class="reactive-text-3 text-break">{{user.username}}</h3>
+            </div>
         </a>
         {% endfor %}
     </div>
