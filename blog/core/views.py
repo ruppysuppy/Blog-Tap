@@ -3,12 +3,13 @@
 ####################################################
 
 from flask import render_template, request, Blueprint
-from flask_login import current_user
+from flask_login import current_user, login_required
 
 ####################################################
 # IMPORTS (LOCAL) ##################################
 ####################################################
 
+from blog.core.search_engine import search
 from blog.models import BlogPost, Notifications, View
 from blog import db
 
@@ -59,3 +60,19 @@ def about():
         notifs = []
     
     return render_template('about.html', notifs=notifs)
+
+####################################################
+# SEARCH SETUP #####################################
+####################################################
+
+@core.route('/search/<string:param>')
+@login_required
+def search_page(param):
+    users, blogs = search(param)
+    
+    if (current_user.is_authenticated):
+        notifs = Notifications.query.filter_by(user_id=current_user.id).order_by(Notifications.date.desc()).all()
+    else:
+        notifs = []
+    
+    return render_template('search.html', notifs=notifs, param=param, users=users, blogs=blogs)
