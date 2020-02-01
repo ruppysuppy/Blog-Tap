@@ -2,6 +2,12 @@
 
 <h1 class="reactive-text-1" align='center' style="margin-bottom: 32px;">WELCOME TO BLOG TAP!</h1>
 
+<div class="row" style="display: flex; justify-content: center;">
+    <form method="post" style="display: flex; justify-content: center; flex-wrap: nowrap;">
+        {{form.hidden_tag()}} {{form.param(placeholder='Search for User/Blog', class="row reactive-text-5", style='border: 2px solid #151D33; border-radius: 12px; padding: 4px 16px')}} {{form.submit(class="row reactive-text-5", style='margin-left: 32px')}}
+    </form>
+</div>
+
 <div style="min-height: max-content; padding-bottom: 32px;">
     {% if recommended.items %}
     <h3 class="reactive-text-3" style="padding-left: 24px;">Recommended For You:</h3>

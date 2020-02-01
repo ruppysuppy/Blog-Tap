@@ -52,14 +52,14 @@ input {
     border-bottom: 2px solid #151D33;
     color: #151D33;
     transition: 0.1s;
-    font-family: 'Marvel';
+    font-family: 'Lato';
     font-size: large;
-    font-weight: 800;
+    font-weight: 400;
     background: transparent;
 }
 
 input::placeholder {
-    color: #151D33;
+    color: grey;
 }
 
 .form-control {
@@ -80,7 +80,7 @@ input:focus {
 .label-text {
     font-family: 'Lato';
     font-size: large;
-    font-weight: 500;
+    font-weight: 700;
 }
 
 input[type=submit],
@@ -90,6 +90,8 @@ input[type=submit],
     border-radius: 8px;
     transition: 0.1s;
     font-family: 'Lato';
+    font-weight: 700;
+    border-bottom: none;
 }
 
 input[type=submit]:hover,
@@ -101,7 +103,7 @@ input[type=submit]:hover,
 
 .form-input-normal {
     font-weight: 400;
-    font-family: 'Marvel';
+    font-family: 'Lato';
     font-size: large;
 }
 

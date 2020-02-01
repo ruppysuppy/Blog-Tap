@@ -2,13 +2,14 @@
 # IMPORTS (FROM LIBRARY) ###########################
 ####################################################
 
-from flask import render_template, request, Blueprint
+from flask import render_template, request, Blueprint, redirect, url_for
 from flask_login import current_user, login_required
 
 ####################################################
 # IMPORTS (LOCAL) ##################################
 ####################################################
 
+from blog.core.forms import Search_Form
 from blog.core.search_engine import search
 from blog.models import BlogPost, Notifications, View
 from blog import db
@@ -23,7 +24,7 @@ core = Blueprint('core', __name__)
 # INDEX SETUP ######################################
 ####################################################
 
-@core.route('/')
+@core.route('/', methods=["GET", "POST"])
 def index():
     View.delete_expired()
     Notifications.delete_expired()
@@ -46,7 +47,12 @@ def index():
     else:
         notifs = []
 
-    return render_template('index.html', page_name="Home", blog_posts=blog_posts, recommended=recommended, notifs=notifs)
+    form = Search_Form()
+
+    if form.validate_on_submit():
+        return redirect(url_for('core.search_page', param=form.param.data))
+
+    return render_template('index.html', page_name="Home", blog_posts=blog_posts, recommended=recommended, notifs=notifs, form=form)
 
 ####################################################
 # ABOUT SETUP ######################################
