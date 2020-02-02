@@ -1,12 +1,13 @@
 .btn-container-tab {
     margin: auto;
     display: flex;
+    transition: 0.1s;
 }
 
 .btn-tab {
     font-size: larger;
     border-radius: 8px;
-    background-color: green;
+    background-color: #0CFFA6;
     color: #151D33;
     margin: 8px 16px;
     padding: 8px 16px;
@@ -14,9 +15,45 @@
 }
 
 .btn-tab:hover {
-    color: white;
-    background-color: rgb(0, 68, 0);
+    color: white !important;
+    background-color: rgb(5, 120, 80) !important;
     cursor: pointer;
+}
+
+.user-card {
+    width: 23%;
+    min-width: 23%;
+}
+
+.user-card img {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    margin: 16px 0;
+}
+
+@media(max-width: 990px) {
+    .user-card {
+        min-width: 30%;
+        width: 30%;
+        margin-bottom: 16px;
+    }
+    .user-card img {
+        height: 125px;
+        width: 125px;
+    }
+}
+
+@media(max-width: 768px) {
+    .user-card {
+        min-width: 48%;
+        width: 48%;
+        margin: 10px auto;
+    }
+    .user-card img {
+        height: 95px;
+        width: 95px;
+    }
 }
 
 @media (max-width: 600px) {

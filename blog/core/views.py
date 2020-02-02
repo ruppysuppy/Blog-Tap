@@ -71,8 +71,7 @@ def about():
 # SEARCH SETUP #####################################
 ####################################################
 
-@core.route('/search/<string:param>')
-@login_required
+@core.route('/search/<string:param>', methods=["GET", "POST"])
 def search_page(param):
     users, blogs = search(param)
     
@@ -80,5 +79,10 @@ def search_page(param):
         notifs = Notifications.query.filter_by(user_id=current_user.id).order_by(Notifications.date.desc()).all()
     else:
         notifs = []
+
+    form = Search_Form()
+
+    if form.validate_on_submit():
+        return redirect(url_for('core.search_page', param=form.param.data))
     
-    return render_template('search.html', notifs=notifs, param=param, users=users, blogs=blogs)
+    return render_template('search.html', notifs=notifs, param=param, users=users, blogs=blogs, form=form)
