@@ -85,4 +85,9 @@ def search_page(param):
     if form.validate_on_submit():
         return redirect(url_for('core.search_page', param=form.param.data))
     
-    return render_template('search.html', notifs=notifs, param=param, users=users, blogs=blogs, form=form)
+    if ((not blogs) and users):
+        open_tab = 2
+    else:
+        open_tab = 1
+    
+    return render_template('search.html', notifs=notifs, param=param, users=users, blogs=blogs, form=form, open_tab=open_tab)

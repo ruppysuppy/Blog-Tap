@@ -48,7 +48,7 @@ def get_matches_blogs(string):
          from BlogPost'
     )
     for identifier, title in id_title:
-        sim = similarity(string, title)
+        sim = similarity(string, title[:8])
         if (sim > 0.65):
             res.append((identifier, sim))
     
@@ -66,7 +66,7 @@ def get_matches_users(string):
          from users'
     )
     for identifier, username in id_username:
-        sim = similarity(string, username)
+        sim = similarity(string, username[:8])
         if (sim > 0.65):
             res.append((identifier, sim))
     
@@ -79,7 +79,7 @@ def get_matches_users(string):
 ####################################################
 
 def search(string):
-    users = get_matches_users(string)[:10]
-    blogs = get_matches_blogs(string)[:10]
+    users = get_matches_users(string[:8])[:10]
+    blogs = get_matches_blogs(string[:8])[:10]
     
     return users, blogs
