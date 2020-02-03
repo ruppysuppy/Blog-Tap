@@ -79,7 +79,7 @@ def get_matches_users(string):
 ####################################################
 
 def search(string):
-    users = get_matches_users(string[:8])[:10]
-    blogs = get_matches_blogs(string[:8])[:10]
+    users = get_matches_users(string[:8])[:12]
+    blogs = get_matches_blogs(string[:8])[:9]
     
     return users, blogs

@@ -115,6 +115,7 @@ input[type=submit]:hover,
 .btn-normal {
     margin-right: 16px;
     border: none;
+    font-weight: 700;
     color: #151D33;
 }
 
@@ -123,6 +124,7 @@ form .btn-danger,
 .btn-cancel {
     transition: 0.1s;
     border-radius: 8px;
+    font-weight: 700;
     color: #151D33;
     background-color: rgb(250, 60, 60);
 }
