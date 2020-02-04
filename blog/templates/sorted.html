@@ -101,12 +101,12 @@
             <div class="modal-body">
                 <p>Sort by:</p>
                 <form action="{{url_for('core.index_sorted')}}">
-                    <input type="radio" name="sort-val" value="Alphabetically Asc" style="display: inline;"> Alphabetically - Ascending <br>
-                    <input type="radio" name="sort-val" value="Alphabetically Dsc" style="display: inline;"> Alphabetically - Descending <br>
-                    <input type="radio" name="sort-val" value="Category" style="display: inline;"> Categorically <br>
-                    <input type="radio" name="sort-val" value="By Date Asc" style="display: inline;"> By Date - Ascending <br>
-                    <input type="radio" name="sort-val" value="By Date Dsc" style="display: inline;"> By Date - Descending <br>
-                    <input type="radio" name="sort-val" value="Popularity" style="display: inline;"> Popularity <br><br>
+                    <input type="radio" id="sort-1" name="sort-val" value="Alphabetically Asc" style="display: inline;"> Alphabetically - Ascending <br>
+                    <input type="radio" id="sort-2" name="sort-val" value="Alphabetically Dsc" style="display: inline;"> Alphabetically - Descending <br>
+                    <input type="radio" id="sort-3" name="sort-val" value="Category" style="display: inline;"> Categorically <br>
+                    <input type="radio" id="sort-4" name="sort-val" value="By Date Asc" style="display: inline;"> By Date - Ascending <br>
+                    <input type="radio" id="sort-5" name="sort-val" value="By Date Dsc" style="display: inline;"> By Date - Descending <br>
+                    <input type="radio" id="sort-6" name="sort-val" value="Popularity" style="display: inline;"> Popularity <br><br>
 
                     <input type="submit" class="btn-normal" value="Sort">
                 </form>
@@ -115,4 +115,6 @@
     </div>
 </div>
 
+
+<script src="{{url_for('static', filename='script/script-sort.js')}}"></script>
 {% endblock content %}
