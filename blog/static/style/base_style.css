@@ -343,6 +343,24 @@ a.dropdown-item:focus {
     transform: scale(0.95);
 }
 
+.fa-sort-amount-asc {
+    color: #0CFFA6;
+    margin-right: 24px;
+    font-size: x-large;
+    transition: 0.1s;
+    filter: drop-shadow(0px 0px 1px #151D33);
+    opacity: 1;
+}
+
+button:hover .fa-sort-amount-asc {
+    color: rgb(10, 190, 125);
+    transform: scale(1.2);
+}
+
+button:focus {
+    outline: none;
+}
+
 
 /* Scroll bar effects */
 
