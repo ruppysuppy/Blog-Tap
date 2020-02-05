@@ -1,7 +1,7 @@
 console.log(typeof(window.location.href))
 var url = new URL(window.location.href);
 
-var sort_val = url.searchParams.get("sort-val");
+var sort_val = url.searchParams.get("sort_val");
 
 if (sort_val == "Alphabetically Asc") {
     but = document.getElementById("sort-1");

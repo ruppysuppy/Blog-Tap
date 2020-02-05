@@ -102,7 +102,7 @@ def index_sorted():
     Notifications.delete_expired()
     
     page = request.args.get('page', 1, type=int)
-    category_val = request.args.get('sort-val')
+    category_val = request.args.get('sort_val')
     
     if (not category_val):
         flash('Select a Category to sort by')
@@ -141,4 +141,4 @@ def index_sorted():
     if form.validate_on_submit():
         return redirect(url_for('core.search_page', param=form.param.data))
 
-    return render_template('sorted.html', page_name="Home", blog_posts=blog_posts, recommended=recommended, notifs=notifs, form=form)
+    return render_template('sorted.html', page_name="Home", blog_posts=blog_posts, recommended=recommended, notifs=notifs, form=form, category_val=category_val)

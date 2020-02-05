@@ -75,11 +75,11 @@
     <ul class="pagination justify-content-center" style="margin-bottom: 0; padding-bottom: 32px;">
         {% for page_num in blog_posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} {% if blog_posts.page == page_num %}
         <li class="page-item active">
-            <a class="page-link active" href="{{url_for('core.index_sorted', page=page_num)}}">{{page_num}}</a>
+            <a class="page-link active" href="{{url_for('core.index_sorted', page=page_num, sort_val=category_val)}}">{{page_num}}</a>
         </li>
         {% else %} {% if page_num %}
         <li class="page-item">
-            <a class="page-link" href="{{url_for('core.index_sorted', page=page_num)}}" style="color: #0CFFA6;">{{page_num}}</a>
+            <a class="page-link" href="{{url_for('core.index_sorted', page=page_num, sort_val=category_val)}}" style="color: #0CFFA6;">{{page_num}}</a>
         </li>
         {% else %}
         <li class="page-item">
@@ -101,12 +101,12 @@
             <div class="modal-body">
                 <p>Sort by:</p>
                 <form action="{{url_for('core.index_sorted')}}">
-                    <input type="radio" id="sort-1" name="sort-val" value="Alphabetically Asc" style="display: inline;"> Alphabetically - Ascending <br>
-                    <input type="radio" id="sort-2" name="sort-val" value="Alphabetically Dsc" style="display: inline;"> Alphabetically - Descending <br>
-                    <input type="radio" id="sort-3" name="sort-val" value="Category" style="display: inline;"> Categorically <br>
-                    <input type="radio" id="sort-4" name="sort-val" value="By Date Asc" style="display: inline;"> By Date - Ascending <br>
-                    <input type="radio" id="sort-5" name="sort-val" value="By Date Dsc" style="display: inline;"> By Date - Descending <br>
-                    <input type="radio" id="sort-6" name="sort-val" value="Popularity" style="display: inline;"> Popularity <br><br>
+                    <input type="radio" id="sort-1" name="sort_val" value="Alphabetically Asc" style="display: inline;"> Alphabetically - Ascending <br>
+                    <input type="radio" id="sort-2" name="sort_val" value="Alphabetically Dsc" style="display: inline;"> Alphabetically - Descending <br>
+                    <input type="radio" id="sort-3" name="sort_val" value="Category" style="display: inline;"> Categorically <br>
+                    <input type="radio" id="sort-4" name="sort_val" value="By Date Asc" style="display: inline;"> By Date - Ascending <br>
+                    <input type="radio" id="sort-5" name="sort_val" value="By Date Dsc" style="display: inline;"> By Date - Descending <br>
+                    <input type="radio" id="sort-6" name="sort_val" value="Popularity" style="display: inline;"> Popularity <br><br>
 
                     <input type="submit" class="btn-normal" value="Sort">
                 </form>

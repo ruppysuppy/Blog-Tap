@@ -364,21 +364,21 @@ button:focus {
 
 /* Scroll bar effects */
 
-::-webkit-scrollbar {
+.dropdown ::-webkit-scrollbar {
     width: 2px;
     border-radius: 1px;
     height: 2px;
 }
 
- ::-webkit-scrollbar-track {
+.dropdown ::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
 
- ::-webkit-scrollbar-thumb {
+.dropdown ::-webkit-scrollbar-thumb {
     background: #888;
 }
 
- ::-webkit-scrollbar-thumb:hover {
+.dropdown ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
 
