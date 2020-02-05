@@ -361,6 +361,10 @@ button:focus {
     outline: none;
 }
 
+.label-mouse-over:hover {
+    cursor: pointer;
+}
+
 
 /* Scroll bar effects */
 

@@ -101,12 +101,24 @@
             <div class="modal-body">
                 <p>Sort by:</p>
                 <form action="{{url_for('core.index_sorted')}}">
-                    <input type="radio" name="sort_val" value="Alphabetically Asc" style="display: inline;"> Alphabetically - Ascending <br>
-                    <input type="radio" name="sort_val" value="Alphabetically Dsc" style="display: inline;"> Alphabetically - Descending <br>
-                    <input type="radio" name="sort_val" value="Category" style="display: inline;"> Categorically <br>
-                    <input type="radio" name="sort_val" value="By Date Asc" style="display: inline;"> By Date - Ascending <br>
-                    <input type="radio" name="sort_val" value="By Date Dsc" style="display: inline;"> By Date - Descending <br>
-                    <input type="radio" name="sort_val" value="Popularity" style="display: inline;"> Popularity <br><br>
+                    <label class="label-mouse-over">
+                        <input type="radio" name="sort_val" value="Alphabetically Asc" style="display: inline;"> Alphabetically - Ascending 
+                    </label><br>
+                    <label class="label-mouse-over">
+                        <input type="radio" name="sort_val" value="Alphabetically Dsc" style="display: inline;"> Alphabetically - Descending 
+                    </label><br>
+                    <label class="label-mouse-over">
+                        <input type="radio" name="sort_val" value="Category" style="display: inline;"> Categorically 
+                    </label><br>
+                    <label class="label-mouse-over">
+                        <input type="radio" name="sort_val" value="By Date Asc" style="display: inline;"> By Date - Ascending 
+                    </label><br>
+                    <label class="label-mouse-over">
+                        <input type="radio" name="sort_val" value="By Date Dsc" style="display: inline;"> By Date - Descending 
+                    </label><br>
+                    <label class="label-mouse-over">
+                        <input type="radio" name="sort_val" value="Popularity" style="display: inline;"> Popularity 
+                    </label><br><br>
 
                     <input type="submit" class="btn-normal" value="Sort">
                 </form>
