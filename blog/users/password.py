@@ -8,6 +8,9 @@ def is_strong(password):
     symbol = False
     number = False
 
+    if (len(password) < 6):
+        return False
+
     for char in password:
         if (char.isdigit()):
             number = True
