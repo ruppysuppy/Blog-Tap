@@ -20,7 +20,7 @@
 
 <div style="min-height: max-content; padding-bottom: 32px;">
     {% if blog_posts.items %}
-    <h3 class="reactive-text-3 text-break" style="padding-left: 24px;">Blogs:</h3>
+    <h3 class="reactive-text-3 text-break">Blogs:</h3>
     <div class="container card-container" style="display: flex; flex-wrap: wrap;">
         {% for post in blog_posts.items %}
         <a href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}" class="blog-card" style="font-weight: 700;">

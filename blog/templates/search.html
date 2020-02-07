@@ -26,7 +26,7 @@
 
 <div style="min-height: max-content; padding-bottom: 32px; margin-top: 32px" id="blog-container">
     {% if blogs %}
-    <h3 class="reactive-text-3 text-break" style="padding-left: 24px;">Top Matching Blogs:</h3>
+    <h3 class="reactive-text-3 text-break">Top Matching Blogs:</h3>
     <div class="container card-container" style="display: flex; flex-wrap: wrap;">
         {% for post in blogs %}
         <a href="{{url_for('blog_posts.blog_post', blog_post_id=post.id)}}" class="blog-card" style="font-weight: 700;">
@@ -56,7 +56,7 @@
 
 <div style="min-height: max-content; padding-bottom: 32px; margin-top: 32px" id="user-container">
     {% if users %}
-    <h3 class="reactive-text-3" style="padding-left: 24px;">Top Matching Users:</h3>
+    <h3 class="reactive-text-3">Top Matching Users:</h3>
     <div class="container card-container" style="display: flex; flex-wrap: wrap;">
         {% for user in users %}
         <a href="{{url_for('user.user_posts', user_id=user.id)}}" class="blog-card user-card" style="font-weight: 700;">

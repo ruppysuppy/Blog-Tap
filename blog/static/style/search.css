@@ -10,6 +10,7 @@
     background-color: #0CFFA6;
     color: #151D33;
     margin: 8px 16px;
+    margin-left: 0;
     padding: 8px 16px;
     transition: 0.1s;
 }
@@ -61,6 +62,7 @@
         font-size: medium;
         border-radius: 6px;
         margin: 8px;
+        margin-left: 0;
         padding: 6px 12px;
     }
 }
