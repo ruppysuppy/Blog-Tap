@@ -166,8 +166,9 @@ form .btn-danger:hover,
     width: 30%;
     min-width: 30%;
     max-width: 30%;
-    border-radius: 16px;
-    border: 2px solid #151D33;
+    border-radius: 0 48px;
+    border: none;
+    /* 2px solid #151D33; */
     margin: 12px 0;
     display: flex;
     background-color: rgb(220, 220, 220);
@@ -193,12 +194,12 @@ form .btn-danger:hover,
 }
 
 .blog-card:hover .img {
-    transform: scale(1.1);
+    transform: scale(1.2);
 }
 
 .card-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 0;
 }
 
