@@ -5,6 +5,7 @@
 from datetime import timedelta
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_misaka import Misaka
 from flask_login import LoginManager
@@ -34,6 +35,20 @@ db = SQLAlchemy(app)
 
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=28)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=28)
+
+####################################################
+# EMAIL SETUP ######################################
+####################################################
+
+app.config.update(
+	MAIL_SERVER = 'smtp.gmail.com',
+	MAIL_PORT = 465,
+	MAIL_USE_SSL = True,
+	MAIL_USERNAME = "youremailid(if its not from gmail, change the mail server)",
+	MAIL_PASSWORD = "yourpassword"
+	)
+
+mail = Mail(app)
 
 ####################################################
 # MIGRATION SETUP ##################################

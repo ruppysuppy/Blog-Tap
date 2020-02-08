@@ -2,14 +2,16 @@
 # IMPORTS (FROM LIBRARY) ###########################
 ####################################################
 
-from flask import render_template, url_for, flash, redirect, request, Blueprint, session
+from flask import render_template, url_for, flash, redirect, request, Blueprint, session, abort
 from flask_login import login_user, logout_user, current_user, login_required
+from flask_mail import Message
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
 ####################################################
 # IMPORTS (LOCAL) ##################################
 ####################################################
 
-from blog import db
+from blog import db, mail
 from blog.models import User, BlogPost, Notifications, Followers
 from blog.users.forms import Register, UpdateUserForm, LoginForm
 from blog.users.password import is_strong
@@ -19,6 +21,12 @@ from blog.users.password import is_strong
 ####################################################
 
 users = Blueprint('user', __name__)
+
+####################################################
+# TIMED SERIALIZER SETUP ###########################
+####################################################
+
+serializer = URLSafeTimedSerializer('somesecretkey')
 
 ####################################################
 # REGISTRATION SETUP ###############################
@@ -37,15 +45,44 @@ def register():
                 db.session.add(user)
                 db.session.commit()
 
-                flash(f'Thankyou for registering at Blog Tap. Welcome {form.username.data}!')
+                try:
+                    token = serializer.dumps(form.email.data, salt='email-confirm')
+                    link = url_for('user.confirm_email', token=token, _external=True)
+                    link_home = url_for('core.index', _external=True)
 
-                return redirect(url_for('user.login'))
+                    msg = Message('Karmatek 2k20 Confirmation', sender='tap@blogtap.com', recipients=[form.email.data])
+
+                    msg.body = f'''
+\tWelcome Blogger!
+
+{form.username.data}, thankyou for registering at Blog Tap. 
+Please click on the link below to confirm your email id.
+Your confirmation link is: {link}
+Login to your account and start Blogging at Blog Tap ({link_home}).
+Hope you have an awesome time.
+        
+\tYour Sincerely
+\tTapajyoti Bose
+\tCreator
+\tBlog Tap
+'''
+
+                    mail.send(msg)
+
+                    flash(f'Thankyou for registering at Blog Tap. Welcome {form.username.data}! Please confirm your email')
+
+                    return redirect(url_for('user.login'))
+
+                except:
+                    flash('Your Account has been created, but at the moment, we are unable to send the confirmation mail.')
+                    return redirect(url_for('user.login'))
+
             else:
                 flash('Use a strong password (1 Upper and 1 lower case characters, 1 number, 1 symbol and minimum length of 6)')
                 return redirect(url_for('user.register'))
         
         else:
-            flash('Email already registered')
+            flash('Email already registered!')
             return redirect(url_for('user.register'))
     
     return render_template('register.html', form=form, page_name="Registration")
@@ -85,6 +122,7 @@ def login():
 ####################################################
 
 @users.route('/logout')
+@login_required
 def logout():
     logout_user()
     flash('Successfully logged out!')
@@ -206,3 +244,32 @@ def unfollow(user_id_1, user_id_2):
 
     user = User.query.get_or_404(user_id_2)
     return redirect(url_for('user.user_posts', user_id=user.id))
+
+####################################################
+# EMAIL CONFIRMATION SETUP #########################
+####################################################
+
+@users.route('/confirm/<token>')
+@login_required
+def confirm_email(token):
+    try:
+        email = serializer.loads(token, salt='email-confirm', max_age=86400)
+        user = User.query.filter_by(email=email).first()
+        user.confirm = 1
+        db.session.commit()
+
+    except SignatureExpired:
+        email = serializer.loads(token, salt='email-confirm')
+        user = User.query.filter_by(email=email).first()
+        db.session.delete(user)
+        db.session.commit()
+
+        flash('Activation Link has expired. Please create your account again and confirm the email id as soon as possible!')
+        return redirect(url_for('core.index'))
+    
+    except:
+        flash('Invalid Token')
+        return redirect(url_for('core.index'))
+    
+    flash('Email id Confirmed! Now you can select events to paticiapte in.')
+    return redirect(url_for('user.account'))
