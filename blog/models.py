@@ -170,4 +170,22 @@ class Likes(db.Model):
         self.user_id = user_id
         self.blog_id = blog_id
         self.like = like
+
+####################################################
+# COMMENTS MODEL SETUP #############################
+####################################################
+
+class Comments(db.Model):
+    __tablename__ = 'Comments'
+
+    id = db.Column(db.Integer, primary_key=True)
+    blog_id = db.Column(db.Integer, db.ForeignKey('BlogPost.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    text = db.Column(db.Text, nullable=False)
+
+    def __init__(self, blog_id, user_id, text):
+        self.blog_id = blog_id
+        self.user_id = user_id
+        self.text = text
     

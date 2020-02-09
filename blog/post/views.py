@@ -186,14 +186,21 @@ def delete(blog_post_id):
 def like(user_id, blog_post_id, like):
     post = BlogPost.query.get_or_404(blog_post_id)
 
-    if (post.user_id == current_user.id):
+    if (not current_user.is_authenticated or post.user_id == current_user.id):
         return redirect(url_for('blog_posts.blog_post', blog_post_id=blog_post_id))
 
     like_entry = Likes.query.filter_by(user_id=user_id, blog_id=blog_post_id).first()
 
+    blog = BlogPost.query.get_or_404(blog_post_id)
+    user = User.query.get_or_404(blog.author.id)
+    user_reaction = User.query.get_or_404(user_id)
+
     if (not like_entry):
         like_entry = Likes(user_id, blog_post_id, bool(like))
         db.session.add(like_entry)
+
+        notif = Notifications(user.id, f'{user_reaction.username} has reacted to your blog "{blog.title}"!', blog_post_id, True)
+        db.session.add(notif)
         
         if (like):
             flash('Blog Liked!')
@@ -203,6 +210,9 @@ def like(user_id, blog_post_id, like):
     else:
         if (like_entry.like != bool(like)):
             like_entry.like = bool(like)
+
+            notif = Notifications(user.id, f'{user_reaction.username} has reacted to your blog "{blog.title}"!', blog_post_id, True)
+            db.session.add(notif)
 
             if (like):
                 flash('Blog Liked!')
