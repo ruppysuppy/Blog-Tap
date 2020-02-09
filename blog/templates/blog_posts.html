@@ -11,7 +11,28 @@
         <br> {{post.text|markdown}} {% if post.author == current_user %}
 
         <a href="{{url_for('blog_posts.update', blog_post_id=post.id)}}"> <button class="btn-normal">Update</button></a>
-        <button type="button" name="button" class="btn btn-danger" data-toggle="modal" data-target="#del_modal">Delete</button> {% endif %}
+        <button type="button" name="button" class="btn btn-danger" data-toggle="modal" data-target="#del_modal">Delete</button> {% else %} {% if current_user.is_authenticated %}
+
+        <br><br>
+        <h4 class="reactive-text-3">Did You Like The Blog?</h4>
+        <a href="{{url_for('blog_posts.like', user_id=current_user.id, blog_post_id=post.id, like=1)}}" class="thumbs-up" style="margin-right: 12px; margin-top: 12px; text-decoration: none;">
+            {% if like_val %}
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i>    
+            <span style="color: #151D33; transform: scale(1);">{{like_count}}</span>         
+            {% else %}
+            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>   
+            <span style="color: #151D33; transform: scale(1);">{{like_count}}</span>          
+            {% endif %}
+        </a>
+        <a href="{{url_for('blog_posts.like', user_id=current_user.id, blog_post_id=post.id, like=0)}}" class="thumbs-up" style="margin-right: 12px; margin-top: 12px; text-decoration: none;">
+            {% if like_val == False %}
+            <i class="fa fa-thumbs-down" aria-hidden="true"></i>  
+            <span style="color: #151D33; transform: scale(1);">{{dislike_count}}</span>      
+            {% else %}
+            <i class="fa fa-thumbs-o-down" aria-hidden="true"></i> 
+            <span style="color: #151D33; transform: scale(1);">{{dislike_count}}</span> 
+            {% endif %}
+        </a> {% endif %} {% endif %}
     </div>
 </div>
 

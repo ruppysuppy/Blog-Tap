@@ -379,6 +379,17 @@ button:focus {
     cursor: pointer;
 }
 
+.thumbs-up {
+    color: rgb(10, 190, 125);
+    transition: 0.1s;
+    font-size: xx-large;
+}
+
+.thumbs-up:hover {
+    color: rgb(5, 120, 80);
+    transform: scale(1.1);
+}
+
 
 /* Scroll bar effects */
 

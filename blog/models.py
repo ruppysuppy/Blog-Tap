@@ -153,3 +153,21 @@ class View(db.Model):
         limit = datetime.now() - timedelta(days=expiration_days)
         cls.query.filter(cls.timestamp <= limit).delete()
         db.session.commit()
+
+####################################################
+# LIKES MODEL SETUP ################################
+####################################################
+
+class Likes(db.Model):
+    __tablename__ = 'Likes'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    blog_id = db.Column(db.Integer, db.ForeignKey('BlogPost.id'), nullable=False)
+    like = db.Column(db.Boolean, nullable=False)
+
+    def __init__(self, user_id, blog_id, like):
+        self.user_id = user_id
+        self.blog_id = blog_id
+        self.like = like
+    

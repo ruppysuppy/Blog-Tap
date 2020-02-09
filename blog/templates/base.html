@@ -14,7 +14,7 @@
 </head>
 
 <body style="width: 100vw; overflow-x: hidden; overflow-y: scroll;">
-    <div class="background" style="height: 100vh; width: 100vw; position: fixed; background-position: center; background-size: cover; top: 0; left: 0; z-index: -10; background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.05)), url({{url_for('static', filename='img/background.png')}});"></div>
+    <div class="background" style="height: 100vh; width: 100vw; position: fixed; transform: scale(1.1); background-position: center; background-size: cover; top: 0; left: 0; z-index: -10; background-image: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.05)), url({{url_for('static', filename='img/background.png')}});"></div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: fixed; top: 0; left: 0; width: 100vw; background-color: #151D33 !important; z-index: 9999;">
         <div class="container">
             <a class="navbar-brand nav-link-mod" href="{{url_for('core.index')}}">

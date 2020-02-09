@@ -10,7 +10,7 @@ from flask_login import current_user, login_required
 ####################################################
 
 from blog import db
-from blog.models import BlogPost, User, Notifications, Followers, View
+from blog.models import BlogPost, User, Notifications, Followers, View, Likes
 from blog.post.forms import BlogPostForm
 
 ####################################################
@@ -81,8 +81,33 @@ def blog_post(blog_post_id):
         notifs = Notifications.query.filter_by(user_id=current_user.id).order_by(Notifications.date.desc()).all()
     else:
         notifs = []
+    
+    like_stat = Likes.query.filter_by(user_id=current_user.id, blog_id=blog_post_id).first()
 
-    return render_template('blog_posts.html', title=post.title, date=post.date, post=post, category=post.category, notifs=notifs)
+    like_count = db.engine.execute(f'''
+        select count(*)
+        from Likes
+        where blog_id={blog_post_id} and like={1}
+    ''')
+    dislike_count = db.engine.execute(f'''
+        select count(*)
+        from Likes
+        where blog_id={blog_post_id} and like={0}
+    ''')
+    like_count = [res[0] for res in like_count][0]
+    dislike_count = [res[0] for res in dislike_count][0]
+    
+    if (like_count == None):
+        like_count = 0
+    if (dislike_count == None):
+        like_count = 0
+    
+    if (like_stat):
+        like_val = like_stat.like
+    else:
+        like_val = None
+    
+    return render_template('blog_posts.html', title=post.title, date=post.date, post=post, category=post.category, notifs=notifs, like_val=like_val, like_count=like_count, dislike_count=dislike_count)
 
 ####################################################
 # UPDATE POST SETUP ################################
@@ -148,6 +173,45 @@ def delete(blog_post_id):
     db.session.delete(post)
     db.session.commit()
 
-    flash('Post Deleted!')
+    flash('Blog Deleted!')
 
     return redirect(url_for('core.index'))
+
+####################################################
+# LIKE INTERACTION SETUP ###########################
+####################################################
+
+@blog_posts.route('/<int:user_id>/<int:blog_post_id>/<int:like>')
+@login_required
+def like(user_id, blog_post_id, like):
+    post = BlogPost.query.get_or_404(blog_post_id)
+
+    if (post.user_id == current_user.id):
+        return redirect(url_for('blog_posts.blog_post', blog_post_id=blog_post_id))
+
+    like_entry = Likes.query.filter_by(user_id=user_id, blog_id=blog_post_id).first()
+
+    if (not like_entry):
+        like_entry = Likes(user_id, blog_post_id, bool(like))
+        db.session.add(like_entry)
+        
+        if (like):
+            flash('Blog Liked!')
+        else:
+            flash('Blog Disliked!')
+
+    else:
+        if (like_entry.like != bool(like)):
+            like_entry.like = bool(like)
+
+            if (like):
+                flash('Blog Liked!')
+            else:
+                flash('Blog Disliked!')
+        else:
+            db.session.delete(like_entry)
+            flash("Reaction Removed")
+
+    db.session.commit()
+    
+    return redirect(url_for('blog_posts.blog_post', blog_post_id=blog_post_id))
