@@ -4,7 +4,7 @@
     <div class="img-post" style="background-image: url({{url_for('static', filename='img/blog_background/'+post.category+'.jpg')}});"></div>
     <div style="position: relative; top: -2rem;">
         <h1 class="reactive-text-1">Title: {{post.title}}</h1>
-        <h3 class="reactive-text-3">Author: <a href="{{url_for('user.user_posts', user_id=post.author.id)}}">{{post.author.username}}</a></h3 class="reactive-text-1">
+        <h3 class="reactive-text-3">Author: <a href="{{url_for('user.user_posts', user_id=post.author.id)}}">{{post.author.username}}</a></h3>
         <h5 class="text-muted reactive-text-5">Published: {{post.date.strftime("%d %B %Y")}}</h5>
         <h5 class="text-muted reactive-text-5">Category: {{post.category}}</h5>
         <h5 class="reactive-text-5">Views: {{post.views}}</h5>
@@ -35,6 +35,24 @@
             <span style="color: #151D33; transform: scale(1);">{{dislike_count}}</span> 
             {% endif %}
         </a> {% endif %} {% endif %}
+
+        <div>
+            <h3 class="reactive-text-3">Comments:</h3>
+            {% for comment in previous_comments %}
+
+            <div class="comment">
+                <p class="reactive-text-5">{{comment.text}}</p><br>
+                <p class="reactive-text-5 text-muted">{{(User.query.get_or_404(comment.user_id)).username}}</p>
+            </div>
+
+            {% endfor %}
+        </div>
+
+        {% if current_user.is_authenticated %}
+        <form method="post">
+            {{form.hidden_tag()}} {{form.text.label}} <br> {{form.text}} <br> {{form.submit}}
+        </form>
+        {% endif %}
     </div>
 </div>
 

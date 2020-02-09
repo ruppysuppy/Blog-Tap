@@ -10,8 +10,8 @@ from flask_login import current_user, login_required
 ####################################################
 
 from blog import db
-from blog.models import BlogPost, User, Notifications, Followers, View, Likes
-from blog.post.forms import BlogPostForm
+from blog.models import BlogPost, User, Notifications, Followers, View, Likes, Comments
+from blog.post.forms import BlogPostForm, CommentForm
 
 ####################################################
 # BLUEPRINT SETUP ##################################
@@ -57,9 +57,21 @@ def create_post():
 # BLOG POST VIEW SETUP #############################
 ####################################################
 
-@blog_posts.route('/blog/<int:blog_post_id>')
+@blog_posts.route('/blog/<int:blog_post_id>', methods=["GET", "POST"])
 def blog_post(blog_post_id):
     post = BlogPost.query.get_or_404(blog_post_id)
+    form = CommentForm()
+
+    previous_comments = Comments.query.filter_by(blog_id=post.id).order_by(Comments.date.desc()).all()
+
+    if (form.validate_on_submit() or request.method == "POST"):
+        comment = Comments(blog_post_id, current_user.id, form.text.data)
+        db.session.add(comment)
+
+        notif = Notifications(post.author.id, f'{current_user.username} has commented on your blog "{post.title}"!', post.id, True)
+        db.session.add(notif)
+
+        db.session.commit()
 
     if (current_user.is_authenticated and current_user.email != post.author.email):
         user = User.query.get_or_404(current_user.id)
@@ -82,7 +94,10 @@ def blog_post(blog_post_id):
     else:
         notifs = []
     
-    like_stat = Likes.query.filter_by(user_id=current_user.id, blog_id=blog_post_id).first()
+    if (current_user.is_authenticated):
+        like_stat = Likes.query.filter_by(user_id=current_user.id, blog_id=blog_post_id).first()
+    else:
+        like_stat = None
 
     like_count = db.engine.execute(f'''
         select count(*)
@@ -107,7 +122,7 @@ def blog_post(blog_post_id):
     else:
         like_val = None
     
-    return render_template('blog_posts.html', title=post.title, date=post.date, post=post, category=post.category, notifs=notifs, like_val=like_val, like_count=like_count, dislike_count=dislike_count)
+    return render_template('blog_posts.html', title=post.title, date=post.date, post=post, category=post.category, notifs=notifs, like_val=like_val, like_count=like_count, dislike_count=dislike_count, previous_comments=previous_comments, form=form, User=User)
 
 ####################################################
 # UPDATE POST SETUP ################################

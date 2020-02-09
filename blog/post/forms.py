@@ -13,6 +13,7 @@ from wtforms.validators import DataRequired
 class BlogPostForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
     category = event_selector = SelectField("Category", choices=[
+        ('Art', 'Art'), 
         ('Education', 'Education'), 
         ('Finances', 'Finances'), 
         ('Fitness', 'Fitness'), 
@@ -20,6 +21,7 @@ class BlogPostForm(FlaskForm):
         ('Gaming', 'Gaming'), 
         ('Health', 'Health'), 
         ('Lifestyle', 'Lifestyle'), 
+        ('Litrature', 'Litrature'), 
         ('Movie', 'Movie'), 
         ('Music', 'Music'), 
         ('News', 'News'), 
@@ -33,4 +35,12 @@ class BlogPostForm(FlaskForm):
         ('Travel', 'Travel')
     ])
     text = TextAreaField("Text", validators=[DataRequired()])
+    submit = SubmitField("Post")
+
+####################################################
+# COMMENTS FORM SETUP ##############################
+####################################################
+
+class CommentForm(FlaskForm):
+    text = TextAreaField("Comment", validators=[DataRequired()])
     submit = SubmitField("Post")
