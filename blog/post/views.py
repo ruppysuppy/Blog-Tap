@@ -72,6 +72,8 @@ def blog_post(blog_post_id):
         db.session.add(notif)
 
         db.session.commit()
+        
+        return redirect(url_for('blog_posts.blog_post', blog_post_id=blog_post_id))
 
     if (current_user.is_authenticated and current_user.email != post.author.email):
         user = User.query.get_or_404(current_user.id)

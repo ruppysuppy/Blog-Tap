@@ -8,8 +8,10 @@
         <h5 class="text-muted reactive-text-5">Published: {{post.date.strftime("%d %B %Y")}}</h5>
         <h5 class="text-muted reactive-text-5">Category: {{post.category}}</h5>
         <h5 class="reactive-text-5">Views: {{post.views}}</h5>
-        <h5 class="reactive-text-5">Likes: {{like_count}}</h5>
-        <h5 class="reactive-text-5">Dislikes: {{dislike_count}}</h5>
+        {% if post.author == current_user or not current_user.is_authenticated %}
+        <h5 class="reactive-text-5"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>: {{like_count}}</h5>
+        <h5 class="reactive-text-5"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i>: {{dislike_count}}</h5>
+        {% endif %}
         <br> {{post.text|markdown}} {% if post.author == current_user %}
 
         <a href="{{url_for('blog_posts.update', blog_post_id=post.id)}}"> <button class="btn-normal">Update</button></a>
@@ -37,20 +39,22 @@
         </a> {% endif %} {% endif %}
 
         <div>
+            <br>
             <h3 class="reactive-text-3">Comments:</h3>
+            <div style="width: 100%; height: 1px; background-color: #151D33;"></div>
+
             {% for comment in previous_comments %}
-
             <div class="comment">
-                <p class="reactive-text-5">{{comment.text}}</p><br>
-                <p class="reactive-text-5 text-muted">{{(User.query.get_or_404(comment.user_id)).username}}</p>
+                <p class="reactive-text-5" style="margin-bottom: 4px;">{{comment.text}}</p>
+                <p class="reactive-text-5 text-muted">By: <a href="{{url_for('user.user_posts', user_id=(User.query.get_or_404(comment.user_id)).id)}}">{{(User.query.get_or_404(comment.user_id)).username}} </a></p>
             </div>
-
             {% endfor %}
-        </div>
+            <div style="width: 100%; height: 1px; background-color: #151D33;"></div>
 
-        {% if current_user.is_authenticated %}
+        </div>
+        <br><br> {% if current_user.is_authenticated %}
         <form method="post">
-            {{form.hidden_tag()}} {{form.text.label}} <br> {{form.text}} <br> {{form.submit}}
+            {{form.hidden_tag()}} {{form.text.label(class='form-control-label text-normal-media-small')}}<br> {{form.text(class='form-control form-control-lg form-input-normal text-normal-media-small', style="border: none;", rows=6)}}<br> {{form.submit(class='text-normal-media-small')}}
         </form>
         {% endif %}
     </div>

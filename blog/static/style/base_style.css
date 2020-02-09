@@ -390,6 +390,14 @@ button:focus {
     transform: scale(1.1);
 }
 
+.comment {
+    width: 100%;
+    border-top: #151D33 1px solid;
+    border-bottom: #151D33 1px solid;
+    padding-left: 4px;
+    padding-top: 12px;
+}
+
 
 /* Scroll bar effects */
 
