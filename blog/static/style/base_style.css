@@ -141,6 +141,19 @@ form .btn-danger:hover,
     background-color: rgb(255, 35, 35);
 }
 
+.btn-danger-imp {
+    transition: 0.1s;
+    border-radius: 8px;
+    font-weight: 700;
+    color: #151D33 !important;
+    background-color: rgb(250, 60, 60) !important;
+}
+
+.btn-danger-imp:hover {
+    transform: scale(1.1) !important;
+    background-color: rgb(255, 35, 35) !important;
+}
+
 .modal-footer .btn-cancel {
     margin: 0 16px;
     background-color: rgb(150, 150, 150);
@@ -382,7 +395,7 @@ button:focus {
 .thumbs-up {
     color: rgb(10, 190, 125);
     transition: 0.1s;
-    font-size: xx-large;
+    font-size: medium;
 }
 
 .thumbs-up:hover {
@@ -392,8 +405,8 @@ button:focus {
 
 .comment {
     width: 100%;
-    border-top: #151D33 1px solid;
-    border-bottom: #151D33 1px solid;
+    border-top: #151D33 0.25px solid;
+    border-bottom: #151D33 0.25px solid;
     padding-left: 4px;
     padding-top: 12px;
 }

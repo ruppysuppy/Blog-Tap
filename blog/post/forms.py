@@ -32,7 +32,8 @@ class BlogPostForm(FlaskForm):
         ('Self-Development', 'Self-Development'), 
         ('Sports', 'Sports'), 
         ('Technology', 'Technology'), 
-        ('Travel', 'Travel')
+        ('Travel', 'Travel'),
+        ('Other', 'Other')
     ])
     text = TextAreaField("Text", validators=[DataRequired()])
     submit = SubmitField("Post")

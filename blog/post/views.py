@@ -68,8 +68,9 @@ def blog_post(blog_post_id):
         comment = Comments(blog_post_id, current_user.id, form.text.data)
         db.session.add(comment)
 
-        notif = Notifications(post.author.id, f'{current_user.username} has commented on your blog "{post.title}"!', post.id, True)
-        db.session.add(notif)
+        if (current_user.id != post.author.id):
+            notif = Notifications(post.author.id, f'{current_user.username} has commented on your blog "{post.title}"!', post.id, True)
+            db.session.add(notif)
 
         db.session.commit()
         
@@ -218,11 +219,6 @@ def like(user_id, blog_post_id, like):
 
         notif = Notifications(user.id, f'{user_reaction.username} has reacted to your blog "{blog.title}"!', blog_post_id, True)
         db.session.add(notif)
-        
-        if (like):
-            flash('Blog Liked!')
-        else:
-            flash('Blog Disliked!')
 
     else:
         if (like_entry.like != bool(like)):
@@ -231,13 +227,8 @@ def like(user_id, blog_post_id, like):
             notif = Notifications(user.id, f'{user_reaction.username} has reacted to your blog "{blog.title}"!', blog_post_id, True)
             db.session.add(notif)
 
-            if (like):
-                flash('Blog Liked!')
-            else:
-                flash('Blog Disliked!')
         else:
             db.session.delete(like_entry)
-            flash("Reaction Removed")
 
     db.session.commit()
     
