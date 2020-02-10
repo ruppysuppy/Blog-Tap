@@ -233,3 +233,34 @@ def like(user_id, blog_post_id, like):
     db.session.commit()
     
     return redirect(url_for('blog_posts.blog_post', blog_post_id=blog_post_id))
+
+####################################################
+# EDIT COMMENT SETUP ###############################
+####################################################
+
+@blog_posts.route('/<int:comment_id>/edit', methods=["GET", "POST"])
+@login_required
+def edit_comment(comment_id):
+    comment = Comments.query.get_or_404(comment_id)
+
+    if (comment.user_id != current_user.id):
+        abort(403)
+    
+    form = CommentForm()
+    
+    if (form.validate_on_submit() or request.method == "POST"):
+        comment.text = form.text.data
+        db.session.commit()
+
+        flash('Comment Updated!')
+        return redirect(url_for('blog_posts.blog_post', blog_post_id=comment.blog_id))
+
+    if (request.method == "GET"):
+        form.text.data = comment.text
+    
+    if (current_user.is_authenticated):
+        notifs = Notifications.query.filter_by(user_id=current_user.id).order_by(Notifications.date.desc()).all()
+    else:
+        notifs = []
+
+    return render_template('edit_comment.html', form=form, notifs=notifs)

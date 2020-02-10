@@ -51,7 +51,7 @@
                     <a href="{{url_for('user.user_posts', user_id=(User.query.get_or_404(comment.user_id)).id)}}">
                         {{(User.query.get_or_404(comment.user_id)).username}} 
                     </a> {% if (current_user.is_authenticated and (current_user.id == comment.user_id)) %}
-                    <a href="#" class="thumbs-up" style="margin-left: 8px;">
+                    <a href="{{url_for('blog_posts.edit_comment', comment_id=comment.id)}}" class="thumbs-up" style="margin-left: 8px;">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </a>
                     {% endif %}
