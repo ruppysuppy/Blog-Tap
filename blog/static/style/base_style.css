@@ -411,6 +411,14 @@ button:focus {
     padding-top: 12px;
 }
 
+.edit {
+    color: rgb(10, 190, 125);
+}
+
+.edit:hover {
+    color: rgb(5, 120, 80);
+}
+
 
 /* Scroll bar effects */
 

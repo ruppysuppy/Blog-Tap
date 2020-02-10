@@ -28,7 +28,7 @@
             <span style="color: #151D33; transform: scale(1);">{{like_count}}</span>          
             {% endif %}
         </a>
-        <a href="{{url_for('blog_posts.like', user_id=current_user.id, blog_post_id=post.id, like=0)}}" class="thumbs-up reactive-text-1" style="margin-right: 12px; margin-top: 12px; text-decoration: none;">
+        <a href="{{url_for('blog_posts.like', user_id=current_user.id, blog_post_id=post.id, like=0)}}" class="thumbs-up reactive-text-5" style="margin-right: 12px; margin-top: 12px; text-decoration: none;">
             {% if like_val == False %}
             <i class="fa fa-thumbs-down" aria-hidden="true"></i>  
             <span style="color: #151D33; transform: scale(1);">{{dislike_count}}</span>      
@@ -38,7 +38,7 @@
             {% endif %}
         </a> {% endif %} {% endif %}
 
-        <div>
+        <div class="container" style="background: rgba(0, 0, 0, 0.25); margin-top: 12px;">
             <br>
             <h4 class="reactive-text-3">Comments:</h4>
             <div style="width: 100%; height: 0.25px; background-color: #151D33;"></div>
@@ -47,15 +47,16 @@
                 <p class="reactive-text-5" style="margin-bottom: 4px;">
                     {{comment.text|markdown}}
                 </p>
-                <p class="reactive-text-5 text-muted">By:
+                <p class="reactive-text-5" style="margin-bottom: 2px; color: rgb(80, 80, 80);">By:
                     <a href="{{url_for('user.user_posts', user_id=(User.query.get_or_404(comment.user_id)).id)}}">
                         {{(User.query.get_or_404(comment.user_id)).username}} 
                     </a> {% if (current_user.is_authenticated and (current_user.id == comment.user_id)) %}
-                    <a href="{{url_for('blog_posts.edit_comment', comment_id=comment.id)}}" class="thumbs-up" style="margin-left: 8px;">
+                    <a href="{{url_for('blog_posts.edit_comment', comment_id=comment.id)}}" class="thumbs-up edit" style="margin-left: 8px;">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </a>
                     {% endif %}
                 </p>
+                <p class="reactive-text-5" style="color: rgb(80, 80, 80);">Posted On: {{comment.date.strftime("%d/%m/%Y")}}</p>
             </div>
             {% endfor %} {% else %}
             <div class="comment">
@@ -65,21 +66,22 @@
 
             <div style="width: 100%; height: 0.25px; background-color: #151D33;"></div>
 
-        </div>
-        <br><br> {% if current_user.is_authenticated %}
-        <form method="post">
-            {{form.hidden_tag()}} {{form.text.label(class='form-control-label text-normal-media-small')}}<br> {{form.text(placeholder="Write a Comment", class='form-control form-control-lg form-input-normal text-normal-media-small', style="border: none;",
-            rows=6)}}
-            <br>
-            <div style="vertical-align: middle; margin-bottom: 24px;" class="text-normal-media-small">
-                <div style="display: inline-block; width: 25px; height: 25px; border-radius: 50%; border: 2px solid blue; color: blue; position: relative; top: 2px;" align='center'>
-                    <strong style="position: relative; top: -2px; color: blue; font-size: medium;">i</strong>
+            <br><br> {% if current_user.is_authenticated %}
+            <form method="post">
+                {{form.hidden_tag()}} {{form.text.label(class='form-control-label text-normal-media-small')}}<br> {{form.text(placeholder="Write a Comment", class='form-control form-control-lg form-input-normal text-normal-media-small', style="border:
+                none;", rows=6)}}
+                <br>
+                <div style="vertical-align: middle; margin-bottom: 24px;" class="text-normal-media-small">
+                    <div style="display: inline-block; width: 25px; height: 25px; border-radius: 50%; border: 2px solid blue; color: blue; position: relative; top: 2px;" align='center'>
+                        <strong style="position: relative; top: -2px; color: blue; font-size: medium;">i</strong>
+                    </div>
+                    <strong style="color: blue;">NOTE:</strong> You can use <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"> Markdown </a> to add pictures or style your blog text
                 </div>
-                <strong style="color: blue;">NOTE:</strong> You can use <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"> Markdown </a> to add pictures or style your blog text
-            </div>
-            {{form.submit(class='text-normal-media-small')}}
-        </form>
-        {% endif %}
+                {{form.submit(class='text-normal-media-small')}}
+            </form>
+            {% endif %}
+            <br>
+        </div>
     </div>
 </div>
 
