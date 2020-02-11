@@ -37,6 +37,7 @@ class User(db.Model, UserMixin):
     last_viewed_catagory1 = db.Column(db.String(64), index=True)
     last_viewed_catagory2 = db.Column(db.String(64), index=True)
     last_viewed_catagory3 = db.Column(db.String(64), index=True)
+    background = db.Column(db.String(1), index=True, nullable=False)
 
     posts = db.relationship('BlogPost', backref='author', lazy=True)
 
@@ -46,6 +47,7 @@ class User(db.Model, UserMixin):
         self.password_hash = generate_password_hash(password)
         self.confirmed = False
         self.profile_image = "profile_img_" + str(randint(1, 9)) + ".png"
+        self.background = "1"
     
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)

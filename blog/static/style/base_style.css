@@ -7,6 +7,18 @@
     outline: none !important;
 }
 
+#background {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    transform: scale(1.15);
+    background-position: center;
+    background-size: cover;
+    top: 0;
+    left: 0;
+    z-index: -10;
+}
+
 .home-link {
     color: #0CFFA6;
     margin-bottom: 0;

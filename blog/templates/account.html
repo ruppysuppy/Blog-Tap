@@ -7,6 +7,10 @@
             <img id="profile-img" src="{{url_for('static', filename='img/profile_image/' + current_user.profile_image)}}" align='center'>
         </button>
         <p class="label-text">{{current_user.email}}</p>
+        <br>
+        <a href="{{url_for('user.change_background')}}">
+            <input class="text-normal-media-small" type="submit" value="Change Background">
+        </a>
     </div>
 </div>
 

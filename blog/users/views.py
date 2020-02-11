@@ -273,3 +273,23 @@ def confirm_email(token):
     
     flash('Email id Confirmed! Now you can select events to paticiapte in.')
     return redirect(url_for('user.account'))
+
+####################################################
+# CHANGE BACKGROUND ################################
+####################################################
+
+@users.route("/change-background")
+@login_required
+def change_background():
+    user = User.query.get_or_404(current_user.id)
+    background_img_num = int(user.background)
+    
+    background_img_num = (background_img_num + 1) % 7
+    
+    if (background_img_num == 0):
+        background_img_num = 1
+    
+    user.background = str(background_img_num)
+    db.session.commit()
+    
+    return redirect(url_for('user.account'))
