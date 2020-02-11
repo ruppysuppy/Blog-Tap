@@ -7,7 +7,7 @@
     outline: none !important;
 }
 
-#background {
+.background {
     height: 100vh;
     width: 100vw;
     position: fixed;
@@ -17,6 +17,7 @@
     top: 0;
     left: 0;
     z-index: -10;
+    opacity: 0;
 }
 
 .home-link {

@@ -1,22 +1,20 @@
 var obj = document.getElementById('background-img-selector');
-var background = document.getElementById('background');
+var background_arr = document.getElementsByClassName('background');
 
 var class_name = obj.className;
 
 if (class_name == "1") {
-    background.style.backgroundImage = "url('static/img/background_img/1.png')";
+    background_arr[0].style.opacity = 1;
 } else if (class_name == "2") {
-    background.style.backgroundImage = "url('static/img/background_img/2.jpg')";
+    background_arr[1].style.opacity = 1;
 } else if (class_name == "3") {
-    background.style.backgroundImage = "url('static/img/background_img/3.jpg')";
+    background_arr[2].style.opacity = 1;
 } else if (class_name == "4") {
-    background.style.backgroundImage = "url('static/img/background_img/4.jpg')";
+    background_arr[3].style.opacity = 1;
 } else if (class_name == "5") {
-    background.style.backgroundImage = "url('static/img/background_img/5.png')";
+    background_arr[4].style.opacity = 1;
 } else if (class_name == "6") {
-    background.style.backgroundImage = "url('static/img/background_img/6.png')";
+    background_arr[5].style.opacity = 1;
 } else {
-    background.style.backgroundImage = "url('static/img/background_img/1.png')";
+    background_arr[6].style.opacity = 1;
 }
-
-console.log(class_name, class_name == "1")
