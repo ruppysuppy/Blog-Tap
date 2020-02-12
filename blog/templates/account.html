@@ -1,8 +1,7 @@
-{% extends 'base.html' %} {% block title %} Account {% endblock title %} {% block content %}
-
+{% extends 'base.html' %} {% block title %} Account {% endblock title %} {% block content %} {% if current_user.confirmed %}
 <div class="container">
     <div align='center'>
-        <h1 class="reactive-text-1">Welcome {{current_user.username}}</h1>
+        <h1 class="reactive-text-1">Hello {{current_user.username}}</h1>
         <button class="acc-pic" type="button" data-toggle="modal" data-target="#exampleModalCenter">
             <img id="profile-img" src="{{url_for('static', filename='img/profile_image/' + current_user.profile_image)}}" align='center'>
         </button>
@@ -87,4 +86,11 @@
 
 <script src="{{url_for('static', filename='script/script_profile_img.js')}}"></script>
 
-{% endblock content %}
+{% else %}
+
+<div class="container">
+    <h3 class="reactive-text-3">Email Id Not Confirmed</h3>
+    <h5 class="reactive-text-5">Please confirm your email id to get access to all the features of Blog Tap</h5>
+</div>
+
+{% endif %} {% endblock content %}

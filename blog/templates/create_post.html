@@ -1,5 +1,4 @@
-{% extends 'base.html' %} {% block title %} Create Post {% endblock title %} {% block content %}
-
+{% extends 'base.html' %} {% block title %} Create Post {% endblock title %} {% block content %} {% if current_user.confirmed %}
 <div class="container" style="position: relative; top: -32px;">
     <form class="form-group" method="POST">
         {{form.hidden_tag()}}
@@ -28,4 +27,11 @@
     </form>
 </div>
 
-{% endblock content %}
+{% else %}
+
+<div class="container">
+    <h3 class="reactive-text-3">Email Id Not Confirmed</h3>
+    <h5 class="reactive-text-5">Please confirm your email id to get access to all the features of Blog Tap</h5>
+</div>
+
+{% endif %} {% endblock content %}

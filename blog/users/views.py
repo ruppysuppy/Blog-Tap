@@ -50,7 +50,7 @@ def register():
                     link = url_for('user.confirm_email', token=token, _external=True)
                     link_home = url_for('core.index', _external=True)
 
-                    msg = Message('Karmatek 2k20 Confirmation', sender='tap@blogtap.com', recipients=[form.email.data])
+                    msg = Message('Blog Tap Email Confirmation', sender=('Tap', 'tap@blogtap.com'), recipients=[form.email.data])
 
                     msg.body = f'''
 \tWelcome Blogger!
@@ -74,7 +74,7 @@ Hope you have an awesome time.
                     return redirect(url_for('user.login'))
 
                 except:
-                    flash('Your Account has been created, but at the moment, we are unable to send the confirmation mail.')
+                    flash('Your Account has been created, but we were unable to send the confirmation mail.')
                     return redirect(url_for('user.login'))
 
             else:
@@ -255,7 +255,7 @@ def confirm_email(token):
     try:
         email = serializer.loads(token, salt='email-confirm', max_age=86400)
         user = User.query.filter_by(email=email).first()
-        user.confirm = 1
+        user.confirmed = True
         db.session.commit()
 
     except SignatureExpired:
@@ -271,7 +271,7 @@ def confirm_email(token):
         flash('Invalid Token')
         return redirect(url_for('core.index'))
     
-    flash('Email id Confirmed! Now you can select events to paticiapte in.')
+    flash('Email id Confirmed! Start blogging Now!')
     return redirect(url_for('user.account'))
 
 ####################################################
