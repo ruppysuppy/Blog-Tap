@@ -50,4 +50,4 @@ class Register(FlaskForm):
 
 class UpdateUserForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    submit = SubmitField('Save Changes')
+    submit = SubmitField('Update Username')
