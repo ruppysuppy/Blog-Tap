@@ -54,6 +54,10 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User-name: {self.username}\nEmail: {self.email}"
+    
+    @staticmethod
+    def gen_pass(password):
+        return generate_password_hash(password)
 
 ####################################################
 # BLOG POST MODEL SETUP ############################

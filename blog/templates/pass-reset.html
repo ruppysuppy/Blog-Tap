@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% block title %} Reset Password {% endblock title %} {% block content %}
+
+<form method="POST">
+    {{form.hidden_tag()}}
+    <br><br> {{form.password.label(class='label-text text-normal-media-small')}}
+    <br> {{form.password(class='col-sm-4 text-normal-media-small', placeholder='Enter password')}}
+    <br><br> {{form.pass_confirm.label(class='label-text text-normal-media-small')}}
+    <br> {{form.pass_confirm(class='col-sm-4 text-normal-media-small', placeholder='Re-Type password')}}
+    <br><br> {{form.submit(class='text-normal-media-small')}}
+</form>
+
+{% endblock content %}

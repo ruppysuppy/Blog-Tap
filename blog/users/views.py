@@ -13,7 +13,7 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
 from blog import db, mail
 from blog.models import User, BlogPost, Notifications, Followers
-from blog.users.forms import Register, UpdateUserForm, LoginForm
+from blog.users.forms import Register, UpdateUserForm, LoginForm, ForgotPasswordForm, ChangePasswordForm, UpdatePasswordForm
 from blog.users.password import is_strong
 
 ####################################################
@@ -50,7 +50,7 @@ def register():
                     link = url_for('user.confirm_email', token=token, _external=True)
                     link_home = url_for('core.index', _external=True)
 
-                    msg = Message('Blog Tap Email Confirmation', sender=('Tap', 'tap@blogtap.com'), recipients=[form.email.data])
+                    msg = Message('Blog Tap Email Confirmation', sender='tap@blogtap.com', recipients=[form.email.data])
 
                     msg.body = f'''
 \tWelcome Blogger!
@@ -69,7 +69,7 @@ Hope you have an awesome time.
 
                     mail.send(msg)
 
-                    flash(f'Thankyou for registering at Blog Tap. Welcome {form.username.data}! Please confirm your email')
+                    flash(f'Thankyou for registering at Blog Tap. Welcome {form.username.data}! Please confirm your email within 30 days.')
 
                     return redirect(url_for('user.login'))
 
@@ -85,7 +85,7 @@ Hope you have an awesome time.
             flash('Email already registered!')
             return redirect(url_for('user.register'))
     
-    return render_template('register.html', form=form, page_name="Registration")
+    return render_template('register.html', form=form)
 
 ####################################################
 # LOGIN SETUP ######################################
@@ -115,7 +115,7 @@ def login():
             flash('Incorrect Username/Password!')
             return redirect(url_for('user.login'))
     
-    return render_template('login.html', form=form, page_name="Login")
+    return render_template('login.html', form=form)
 
 ####################################################
 # LOGOUT SETUP #####################################
@@ -140,7 +140,7 @@ def account():
     if form.validate_on_submit():
         current_user.username = form.username.data
 
-        flash('The Changes have been saved!')
+        flash('Username Updated!')
 
         db.session.commit()
 
@@ -253,7 +253,7 @@ def unfollow(user_id_1, user_id_2):
 @login_required
 def confirm_email(token):
     try:
-        email = serializer.loads(token, salt='email-confirm', max_age=86400)
+        email = serializer.loads(token, salt='email-confirm', max_age=(86400 * 30))
         user = User.query.filter_by(email=email).first()
         user.confirmed = True
         db.session.commit()
@@ -264,8 +264,8 @@ def confirm_email(token):
         db.session.delete(user)
         db.session.commit()
 
-        flash('Activation Link has expired. Please create your account again and confirm the email id as soon as possible!')
-        return redirect(url_for('core.index'))
+        flash('Activation Link has expired. Your account was deleted. Please create your account again and confirm the email id as soon as possible!')
+        return redirect(url_for('user.register'))
     
     except:
         flash('Invalid Token')
@@ -293,3 +293,129 @@ def change_background():
     db.session.commit()
     
     return redirect(url_for('user.account'))
+
+####################################################
+# FORGOT PASSWORD SETUP ############################
+####################################################
+
+@users.route("/forgot-password", methods=["GET", "POST"])
+def forgot_password():
+    form = ForgotPasswordForm()
+
+    if (form.validate_on_submit() or request.method == "POST"):
+        email = form.email.data
+        user = User.query.filter_by(email=email).first()
+
+        if (not user):
+            flash("There is no account registered using this email id")
+            return redirect(url_for('user.register'))
+        else:
+            if (not user.confirmed):
+                db.session.delete(user)
+                db.session.commit()
+
+                flash("You had not confirmed your email. Your account has been deleted. Please re-open a new account.")
+                return redirect(url_for('user.register'))
+            else:
+                try:
+                    token = serializer.dumps(email, salt='forgot-confirm')
+                    link = url_for('user.change_password', token=token, _external=True)
+
+                    msg = Message('Blog Tap Password Reset', sender='tap@blogtap.com', recipients=[email])
+
+                    msg.body = f'''
+\tWelcome Blogger!
+
+Hello {user.username}.
+Please click on the link below to reset your password at Blog Tap.
+Your reset link is: {link}
+If you didn't request password reset, please ignore this mail.
+Hope you have an awesome time.
+        
+\tYour Sincerely
+\tTapajyoti Bose
+\tCreator
+\tBlog Tap
+'''
+
+                    mail.send(msg)
+
+                    flash(f'Password reset mail has been sent. Please reset your password within 48 hours.')
+                    return redirect(url_for('user.login'))
+
+                except:
+                    flash('We were unable to send the password reset mail.')
+                    return redirect(url_for('core.index'))
+    
+    return render_template('forgot-pass.html', form=form)
+
+####################################################
+# RESET PASSWORD  ##################################
+####################################################
+
+@users.route("/change-password/<token>", methods=["GET", "POST"])
+def change_password(token):
+    try:
+        email = serializer.loads(token, salt='forgot-confirm', max_age=(86400 * 2))
+        user = User.query.filter_by(email=email).first()
+
+        login_user(user)
+        session.permanent = True
+
+        form = ChangePasswordForm()
+
+        if (form.validate_on_submit() or request.method == "POST"):
+            if (is_strong(form.password.data)):
+                pswrd = User.gen_pass(form.password.data)
+                user.password_hash = pswrd
+                db.session.commit()
+
+                flash("Password Reset!")
+                return redirect(url_for('core.index'))
+            else:
+                flash("Use a strong password (1 Upper and 1 lower case characters, 1 number, 1 symbol and minimum length of 6)")
+                return redirect(url_for('user.change_password', token=token))
+
+    except SignatureExpired:
+        email = serializer.loads(token, salt='forgot-confirm')
+        user = User.query.filter_by(email=email).first()
+
+        flash('Activation Link has expired. Please create go through the "Forgot Password" Process again!')
+        return redirect(url_for('user.forgot_password'))
+    
+    except:
+        flash('Invalid Token')
+        return redirect(url_for('core.index'))
+    
+    return render_template('pass-reset.html', form=form)
+
+####################################################
+# UPDATE PASSWORD  #################################
+####################################################
+
+@users.route("/update-password", methods=["GET", "POST"])
+@login_required
+def update_password():
+    form = UpdatePasswordForm()
+
+    if (form.validate_on_submit() or request.method == "POST"):
+        user = User.query.get_or_404(current_user.id)
+        
+        if (user.check_password(form.curr_pass.data)):
+            if (is_strong(form.password.data)):
+                user.password_hash = User.gen_pass(form.password.data)
+                db.session.commit()
+                flash('Password Updated!')
+                return redirect(url_for('user.account'))
+
+            else:
+                flash('Use a strong password (1 Upper and 1 lower case characters, 1 number, 1 symbol and minimum length of 6)')
+                return redirect(url_for('user.update_password'))
+
+        else:
+            flash("Incorrect Password!")
+            return redirect(url_for('user.update_password'))
+    
+    notifs = Notifications.query.filter_by(user_id=current_user.id).order_by(Notifications.date.desc()).all()
+
+    return render_template('update-pass.html', form=form, notifs=notifs)

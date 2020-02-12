@@ -51,3 +51,30 @@ class Register(FlaskForm):
 class UpdateUserForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     submit = SubmitField('Update Username')
+
+####################################################
+# FORGOT PASSWORD FORM SETUP #######################
+####################################################
+
+class ForgotPasswordForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Get Reset Mail')
+
+####################################################
+# CHANGE PASSWORD FORM SETUP #######################
+####################################################
+
+class ChangePasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    pass_confirm = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', 'Both the Password Fields Must Match')])
+    submit = SubmitField('Set Password')
+
+####################################################
+# UPDATE PASSWORD FORM SETUP #######################
+####################################################
+
+class UpdatePasswordForm(FlaskForm):
+    curr_pass = PasswordField('Current Password', validators=[DataRequired()])
+    password = PasswordField('New Password', validators=[DataRequired()])
+    pass_confirm = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', 'Both the Password Fields Must Match')])
+    submit = SubmitField('Set Password')
