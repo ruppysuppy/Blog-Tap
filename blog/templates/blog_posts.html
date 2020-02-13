@@ -13,7 +13,7 @@
         <h5 class="reactive-text-5"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i>: {{dislike_count}}</h5>
         {% endif %}
         <br> {{post.text|markdown}} {% if post.author == current_user %}
-
+        <br>
         <a href="{{url_for('blog_posts.update', blog_post_id=post.id)}}"> <button class="btn-normal">Edit</button></a>
         <button type="button" name="button" class="btn btn-danger" data-toggle="modal" data-target="#del_modal">Delete</button> {% else %} {% if current_user.is_authenticated %}
 
