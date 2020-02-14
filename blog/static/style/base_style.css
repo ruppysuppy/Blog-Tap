@@ -374,6 +374,7 @@ input[type="radio"]:checked+label {
 
 a.dropdown-item {
     transition: 0.1s;
+    width: max-content;
 }
 
 a.dropdown-item:hover,

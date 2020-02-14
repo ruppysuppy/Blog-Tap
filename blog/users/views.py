@@ -204,6 +204,7 @@ def user_posts(user_id):
 @login_required
 def follow(user_id_1, user_id_2):
     data = Followers.query.filter_by(follower_id=user_id_1, followed_id=user_id_2).all()
+    user = User.query.get_or_404(user_id_2)
 
     if (data):
         flash(f"You are already following {user_id_2}!")
@@ -211,14 +212,13 @@ def follow(user_id_1, user_id_2):
         data = Followers(user_id_1, user_id_2)
         db.session.add(data)
         
-        notif = Notifications(user_id_1, f'You started following {user_id_2}!', user_id_2, False)
+        notif = Notifications(user_id_1, f'You started following {user.username}!', user_id_2, False)
         db.session.add(notif)
         
         db.session.commit()
 
-        flash(f'You are following {user_id_2}!')
+        flash(f'You are following {user.username}!')
 
-    user = User.query.get_or_404(user_id_2)
     return redirect(url_for('user.user_posts', user_id=user.id))
 
 ####################################################
@@ -229,20 +229,20 @@ def follow(user_id_1, user_id_2):
 @login_required
 def unfollow(user_id_1, user_id_2):
     data = Followers.query.filter_by(follower_id=user_id_1, followed_id=user_id_2).first()
+    user = User.query.get_or_404(user_id_2)
 
     if (not data):
-        flash(f"You don't follow {user_id_2}!")
+        flash(f"You don't follow {user.username}!")
     else:
         db.session.delete(data)
         
-        notif = Notifications(user_id_1, f'You stopped following {user_id_2}!', user_id_2, False)
+        notif = Notifications(user_id_1, f'You stopped following {user.username}!', user_id_2, False)
         db.session.add(notif)
         
         db.session.commit()
 
-        flash(f'You unfollowed {user_id_2}!')
+        flash(f'You unfollowed {user.username}!')
 
-    user = User.query.get_or_404(user_id_2)
     return redirect(url_for('user.user_posts', user_id=user.id))
 
 ####################################################
