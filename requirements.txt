@@ -1,6 +1,6 @@
 certifi==2019.6.16
 Click==7.0
-Flask==1.1.1
+Flask==2.3.2
 Flask-Login==0.4.1
 Flask-Mail==0.9.1
 Flask-Migrate==2.5.2
