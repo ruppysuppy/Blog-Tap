@@ -1,4 +1,4 @@
-certifi==2019.6.16
+certifi==2023.7.22
 Click==7.0
 Flask==2.3.2
 Flask-Login==0.4.1
